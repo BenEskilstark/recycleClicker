@@ -1,7 +1,10 @@
 // @flow
 
-const {buttonReducer} = require('./buttonReducer');
+const {burnOrRecycleReducer} = require('./burnOrRecycleReducer');
+const {employeeReducer} = require('./employeeReducer');
 const {tickReducer} = require('./tickReducer');
+const {uiReducer} = require('./uiReducer');
+
 const {initState} = require('../state/initState');
 
 import type {State, Action} from '../types';
@@ -29,8 +32,12 @@ const rootReducer = ((state: State, action: Action): State => {
       }
     case 'BURN':
     case 'RECYCLE':
+      return burnOrRecycleReducer(state, action);
     case 'HIRE':
-      return buttonReducer(state, action);
+    case 'SET_WAGE':
+      return employeeReducer(state, action);
+    case 'SELECT_ROLE':
+      return uiReducer(state, action);
   }
   return state;
 });

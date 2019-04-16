@@ -1,4 +1,5 @@
 const React = require('React');
+const {getDisplayMoney} = require('../../selectors/selectors');
 
 // props:
 // min, max -- lower, upper bounds
@@ -8,38 +9,23 @@ const React = require('React');
 // name     -- label
 
 class Slider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: this.props.value != null ? this.props.value : this.props.min,
-    };
-  }
-
-  handleChange(ev) {
-    const value = parseInt(ev.target.value);
-    console.log(value);
-    this.setState({value});
-    if (this.props.onChange) {
-      this.props.onChange(value);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({value: nextProps.value != null ? nextProps.value : this.state.value});
-  }
-
   render() {
-    const {props, state} = this;
-    console.log('render');
+    const {props} = this;
     return (
-      <div style={{}}>
-        {props.name}
+      <div className="slider">
+        <div className="sliderLabel">
+          {props.name}
+        </div>
         <input type="range"
-          style={{width: 100}}
+          className="sliderSlider"
           min={props.min} max={props.max}
-          onChange={this.handleChange}
-          step={props.step != null ? props.step : 1} />
-      {this.state.value}
+          value={props.value != null ? props.value : props.min}
+          onChange={(ev) => props.onChange(parseInt(ev.target.value))}
+          step={props.step != null ? props.step : 1}
+        />
+        <div className="sliderValue">
+          {getDisplayMoney(props.value)}
+        </div>
       </div>
     );
   }

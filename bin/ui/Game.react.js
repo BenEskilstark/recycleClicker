@@ -20,10 +20,14 @@ var Slider = require('./components/Slider.react');
 var Table = require('./components/Table.react');
 var Ticker = require('./components/Ticker.react');
 
+var _require = require('../selectors/selectors.js'),
+    getDisplayMoney = _require.getDisplayMoney;
+
 /**
  * {state: {...store.getState()}}
  * {props: {store}}
  */
+
 
 var Game = function (_React$Component) {
   _inherits(Game, _React$Component);
@@ -53,7 +57,7 @@ var Game = function (_React$Component) {
           Card,
           null,
           React.createElement(LabelledValue, { label: 'Trash', value: state.trash.cur }),
-          React.createElement(LabelledValue, { label: 'Money', value: state.money.cur }),
+          React.createElement(LabelledValue, { label: 'Money', value: getDisplayMoney(state) }),
           React.createElement(LabelledValue, { label: 'Employees', value: state.employees.cur })
         ),
         React.createElement(Card, null),
@@ -63,7 +67,17 @@ var Game = function (_React$Component) {
           React.createElement(Button, { label: 'Burn', onClick: function onClick() {
               return dispatch({ type: 'BURN' });
             } }),
-          React.createElement(LabelledValue, { label: 'Burned', value: state.burn.cur })
+          React.createElement(LabelledValue, { label: 'Burned', value: state.burn.cur }),
+          React.createElement(LabelledValue, { label: 'Burners', value: state.employees.Burner.cur }),
+          React.createElement(Slider, {
+            name: 'Wage',
+            min: state.employees.Burner.minWage,
+            max: state.employees.Burner.maxWage,
+            value: state.employees.Burner.curWage,
+            onChange: function onChange(wage) {
+              return dispatch({ type: 'SET_WAGE', role: 'Burner', wage: wage });
+            }
+          })
         ),
         React.createElement(
           Card,
@@ -72,6 +86,23 @@ var Game = function (_React$Component) {
               return dispatch({ type: 'RECYCLE' });
             } }),
           React.createElement(LabelledValue, { label: 'Recycled', value: state.recycle.cur })
+        ),
+        React.createElement(
+          Card,
+          null,
+          React.createElement(Button, {
+            label: 'Hire',
+            onClick: function onClick() {
+              return dispatch({ type: 'HIRE', role: state.ui.selectedRole });
+            }
+          }),
+          React.createElement(RadioPicker, {
+            options: state.employees.roleOptions,
+            selected: state.ui.selectedRole,
+            onChange: function onChange(role) {
+              return dispatch({ type: 'SELECT_ROLE', role: role });
+            }
+          })
         )
       );
 

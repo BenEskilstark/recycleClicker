@@ -10,6 +10,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = require('React');
 
+var _require = require('../../selectors/selectors'),
+    getDisplayMoney = _require.getDisplayMoney;
+
 // props:
 // min, max -- lower, upper bounds
 // value    -- starting value (min if null)
@@ -20,49 +23,39 @@ var React = require('React');
 var Slider = function (_React$Component) {
   _inherits(Slider, _React$Component);
 
-  function Slider(props) {
+  function Slider() {
     _classCallCheck(this, Slider);
 
-    var _this = _possibleConstructorReturn(this, (Slider.__proto__ || Object.getPrototypeOf(Slider)).call(this, props));
-
-    _this.state = {
-      value: _this.props.value != null ? _this.props.value : _this.props.min
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (Slider.__proto__ || Object.getPrototypeOf(Slider)).apply(this, arguments));
   }
 
   _createClass(Slider, [{
-    key: 'handleChange',
-    value: function handleChange(ev) {
-      var value = parseInt(ev.target.value);
-      console.log(value);
-      this.setState({ value: value });
-      if (this.props.onChange) {
-        this.props.onChange(value);
-      }
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState({ value: nextProps.value != null ? nextProps.value : this.state.value });
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var props = this.props,
-          state = this.state;
+      var props = this.props;
 
-      console.log('render');
       return React.createElement(
         'div',
-        { style: {} },
-        props.name,
+        { className: 'slider' },
+        React.createElement(
+          'div',
+          { className: 'sliderLabel' },
+          props.name
+        ),
         React.createElement('input', { type: 'range',
-          style: { width: 100 },
+          className: 'sliderSlider',
           min: props.min, max: props.max,
-          onChange: this.handleChange,
-          step: props.step != null ? props.step : 1 }),
-        this.state.value
+          value: props.value != null ? props.value : props.min,
+          onChange: function onChange(ev) {
+            return props.onChange(parseInt(ev.target.value));
+          },
+          step: props.step != null ? props.step : 1
+        }),
+        React.createElement(
+          'div',
+          { className: 'sliderValue' },
+          getDisplayMoney(props.value)
+        )
       );
     }
   }]);

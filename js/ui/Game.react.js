@@ -8,6 +8,10 @@ const Slider = require('./components/Slider.react');
 const Table = require('./components/Table.react');
 const Ticker = require('./components/Ticker.react');
 
+const {
+  getDisplayMoney
+} = require('../selectors/selectors.js');
+
 /**
  * {state: {...store.getState()}}
  * {props: {store}}
@@ -29,7 +33,7 @@ class Game extends React.Component {
       <React.Fragment>
         <Card>
           <LabelledValue label="Trash" value={state.trash.cur} />
-          <LabelledValue label="Money" value={state.money.cur} />
+          <LabelledValue label="Money" value={getDisplayMoney(state)} />
           <LabelledValue label="Employees" value={state.employees.cur} />
         </Card>
         <Card>
@@ -38,10 +42,30 @@ class Game extends React.Component {
         <Card>
           <Button label="Burn" onClick={() => dispatch({type: 'BURN'})} />
           <LabelledValue label="Burned" value={state.burn.cur} />
+          <LabelledValue label="Burners" value={state.employees.Burner.cur} />
+          <Slider
+            name={'Wage'}
+            min={state.employees.Burner.minWage}
+            max={state.employees.Burner.maxWage}
+            value={state.employees.Burner.curWage}
+            onChange={(wage) => dispatch({type: 'SET_WAGE', role: 'Burner', wage})}
+          />
         </Card>
         <Card>
           <Button label="Recycle" onClick={() => dispatch({type: 'RECYCLE'})} />
           <LabelledValue label="Recycled" value={state.recycle.cur} />
+        </Card>
+
+        <Card>
+          <Button
+            label="Hire"
+            onClick={() => dispatch({type: 'HIRE', role: state.ui.selectedRole})}
+          />
+          <RadioPicker
+            options={state.employees.roleOptions}
+            selected={state.ui.selectedRole}
+            onChange={(role) => dispatch({type: 'SELECT_ROLE', role})}
+          />
         </Card>
       </React.Fragment>
     );

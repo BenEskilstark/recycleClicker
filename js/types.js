@@ -1,7 +1,9 @@
 // @flow
 
 export type State = {
-  ui: {},
+  ui: {
+    selectedRole: Role, // selected role for next hire
+  },
   trash: {
     cur: number,
     max: number,
@@ -19,6 +21,13 @@ export type State = {
   },
   employees: {
     cur: number,
+    roleOptions: Array<Role>,
+    [role: Role]: {
+      minWage: number,
+      maxWage: number,
+      curWage: number,
+      cur: number,
+    }
   },
   config: {
     trashPerBurn: number,

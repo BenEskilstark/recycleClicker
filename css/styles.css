@@ -35,7 +35,7 @@ body {
 /* ------------------------------------------------------------------ */
 
 button {
-  width: 80%;
+  width: 99%;
   margin: 0 auto;
   display: block;
   color: rgba(0, 0, 0, 0.5);
@@ -75,5 +75,54 @@ button:hover {
   width: 50%;
 }
 
+/* ------------------------------------------------------------------ */
+/* Slider */
+/* ------------------------------------------------------------------ */
 
+.slider {
+  width: 100%;
+}
 
+.sliderLabel {
+  display: inline-block;
+  width: 37%;
+  text-align: right;
+}
+
+.sliderSlider {
+  display: inline-block;
+  width: 50%;
+}
+
+.sliderValue {
+  display: inline-block;
+  width: 10%;
+  text-align: right;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #fff;
+  height: 18px;
+  width: 18px;
+  margin-top: -8px;
+  border-radius: 99px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 4px;
+  background: #ddd;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ticker */
+/* ------------------------------------------------------------------ */
+
+.ticker {
+  height: 20%;
+  width: 100%;
+}

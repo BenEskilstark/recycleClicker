@@ -27,25 +27,34 @@ var Button = function (_React$Component) {
   _createClass(Button, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var optionToggles = [];
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = this.props.options[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var _loop = function _loop() {
           var option = _step.value;
 
           optionToggles.push(React.createElement(
-            'input',
-            { type: 'radio',
-              name: 'hello',
+            React.Fragment,
+            null,
+            option,
+            React.createElement('input', { type: 'radio',
               key: 'radio_option_' + option,
               value: option,
-              checked: option === selected
-            },
-            option
+              checked: option === _this2.props.selected,
+              onChange: function onChange() {
+                return _this2.props.onChange(option);
+              }
+            })
           ));
+        };
+
+        for (var _iterator = this.props.options[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
         }
       } catch (err) {
         _didIteratorError = true;
@@ -65,7 +74,7 @@ var Button = function (_React$Component) {
       return React.createElement(
         'div',
         null,
-        options
+        optionToggles
       );
     }
   }]);

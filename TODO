@@ -1,23 +1,28 @@
 
  - - - - - - TODO - - - - - -
- - Base React Components
-   - radio picker
-   - slider (for wage)
-   - ticker
- - maybe(state, jsx, name) that shows/flickers comps
+ - implement employees and wages
+   - burners and recyclers have Pay button -- how does it activate?
+   - employees quit if they aren't paid
+   - managers, lawyers, scientists earn per some unit of time
+ - implement trash amount going up over time
 
  - - - - - LATER - - - - - -
- -
+ - maybe(state, jsx, name) that shows/flickers comps
 
  - - - - - - WISH - - - - - -
  - some sort of flicker/highlight when a value changes
+ - employees quit if they are underpaid
 
  - - - - - REFACTOR - - - - -
+ - Pull out the cards in Game.react into their own comps
 
  - - - - - - DONE - - - - - -
  - config for default values of initial state
  - Base React Components
+   - slider (for wage)
+   - ticker
    - cards
    - Button
    - label and value pair
+   - radio picker
  - put on github

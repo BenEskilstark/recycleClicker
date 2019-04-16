@@ -2,7 +2,7 @@
 
 import type {State} from '../types';
 
-const buttonReducer = (state: State, action): State => {
+const burnOrRecycleReducer = (state: State, action): State => {
   const {
     trashPerBurn, revenuePerBurn,
     trashPerRecycle, revenuePerRecycle,
@@ -40,15 +40,7 @@ const buttonReducer = (state: State, action): State => {
           cur: state.money.cur + revenuePerRecycle,
         },
       };
-    case 'HIRE':
-      return {
-        ...state,
-        employees: {
-          ...state.employees,
-          cur: state.employees.cur + 1,
-        },
-      };
   }
 }
 
-module.exports = {buttonReducer};
+module.exports = {burnOrRecycleReducer};
