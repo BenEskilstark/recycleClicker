@@ -1,0 +1,22 @@
+
+ - - - - - - TODO - - - - - -
+ - Base React Components
+   - Button
+   - 2-column table
+   - label and value pair
+   - radio picker
+   - slider (for wage)
+   - cards
+   - ticker
+ - maybe(state, jsx, name) that shows/flickers comps
+
+ - - - - - LATER - - - - - -
+ -
+
+ - - - - - - WISH - - - - - -
+ - some sort of flicker/highlight when a value changes
+
+ - - - - - REFACTOR - - - - -
+
+ - - - - - - DONE - - - - - -
+ - config for default values of initial state
