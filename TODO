@@ -1,12 +1,8 @@
 
  - - - - - - TODO - - - - - -
  - Base React Components
-   - Button
-   - 2-column table
-   - label and value pair
    - radio picker
    - slider (for wage)
-   - cards
    - ticker
  - maybe(state, jsx, name) that shows/flickers comps
 
@@ -20,3 +16,8 @@
 
  - - - - - - DONE - - - - - -
  - config for default values of initial state
+ - Base React Components
+   - cards
+   - Button
+   - label and value pair
+ - put on github
