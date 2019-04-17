@@ -7,12 +7,22 @@ var Game = require('./ui/Game.react');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var _require2 = require('./reducers/rootReducer.js'),
+var _require2 = require('./reducers/rootReducer'),
     rootReducer = _require2.rootReducer;
+
+var _require3 = require('./systems/employeeClickSystem'),
+    initEmployeeClickSystem = _require3.initEmployeeClickSystem;
 
 var store = createStore(rootReducer);
 window.store = store; // useful for debugging
 
 store.dispatch({ type: 'START' });
+
+// set up systems
+initEmployeeClickSystem(store);
+
+var interval = setInterval(function () {
+  return store.dispatch({ type: 'TICK' });
+}, store.getState().config.msPerTick);
 
 ReactDOM.render(React.createElement(Game, { store: store }), document.getElementById('container'));

@@ -9,6 +9,7 @@ class Button extends React.Component {
   render() {
     return (
       <button type="button"
+        id={this.props.label.toUpperCase() + '_button'}
         onClick={this.props.onClick}
       >
         {this.props.label}

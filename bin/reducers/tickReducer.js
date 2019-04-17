@@ -4,5 +4,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var tickReducer = function tickReducer(state) {
   var nextState = _extends({}, state);
+  nextState.time = state.time + 1;
+
   return nextState;
 };
+
+module.exports = { tickReducer: tickReducer };

@@ -22,14 +22,6 @@ const rootReducer = ((state: State, action: Action): State => {
       return state;
     case 'TICK':
       return tickReducer(state);
-    case 'ADD_TRASH':
-      return {
-        ...state,
-        trash: {
-          ...state.trash,
-          cur: state.trash.cur + action.amount,
-        },
-      }
     case 'BURN':
     case 'RECYCLE':
       return burnOrRecycleReducer(state, action);

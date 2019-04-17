@@ -1,6 +1,7 @@
 // @flow
 
 export type State = {
+  time: number,
   ui: {
     selectedRole: Role, // selected role for next hire
   },
@@ -27,9 +28,13 @@ export type State = {
       maxWage: number,
       curWage: number,
       cur: number,
+      clickRate: number,
+      action: string,
     }
   },
   config: {
+    msPerTick: number,
+
     trashPerBurn: number,
     revenuePerBurn: number,
     trashPerRecycle: number,

@@ -11,15 +11,16 @@ class Button extends React.Component {
     const optionToggles = [];
     for (const option of this.props.options) {
       optionToggles.push(
-        <React.Fragment>
+        <div className="radioOption">
           {option}
           <input type="radio"
+            className="radioCheckbox"
             key={'radio_option_'+ option}
             value={option}
             checked={option === this.props.selected}
             onChange={() => this.props.onChange(option)}
           />
-        </React.Fragment>
+        </div>
       );
     }
 
