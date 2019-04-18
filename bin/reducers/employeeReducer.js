@@ -10,8 +10,8 @@ var employeeReducer = function employeeReducer(state, action) {
       return _extends({}, state, {
         employees: _extends({}, state.employees, _defineProperty({
           cur: state.employees.cur + 1
-        }, action.role, _extends({}, state.employees[action.role], {
-          cur: state.employees[action.role].cur + 1
+        }, state.ui.selectedRole, _extends({}, state.employees[state.ui.selectedRole], {
+          cur: state.employees[state.ui.selectedRole].cur + 1
         })))
       });
     case 'SET_WAGE':

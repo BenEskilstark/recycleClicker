@@ -9,6 +9,9 @@ const burnOrRecycleReducer = (state: State, action): State => {
   } = state.config;
   switch (action.type) {
     case 'BURN':
+      if (state.trash.cur == 0) {
+        return state;
+      }
       return {
         ...state,
         trash: {
@@ -25,6 +28,9 @@ const burnOrRecycleReducer = (state: State, action): State => {
         },
       };
     case 'RECYCLE':
+      if (state.trash.cur == 0) {
+        return state;
+      }
       return {
         ...state,
         trash: {

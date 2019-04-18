@@ -17,7 +17,7 @@ const initState = (): State => {
       max: Infinity,
     },
     trash: {
-      cur: 1000,
+      cur: 100,
       max: 1000,
     },
     money: {
@@ -25,7 +25,7 @@ const initState = (): State => {
     },
     employees: {
       cur: 0,
-      roleOptions: ['Burner', 'Recycler', 'Manager', 'Scientist', 'Lawyer', 'Recruiter'],
+      roleOptions: ['Burner', 'Recycler', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
       Burner: {
         minWage: 10,
         maxWage: 500,
@@ -39,7 +39,7 @@ const initState = (): State => {
         maxWage: 500,
         curWage: 20,
         cur: 0,
-        clickRate: 25,
+        clickRate: 100,
         action: 'RECYCLE',
       },
       Manager: {
@@ -47,7 +47,7 @@ const initState = (): State => {
         maxWage: 1000,
         curWage: 200,
         cur: 0,
-        clickRate: 1,
+        clickRate: 100,
         action: 'PAY',
       },
       Recruiter: {
@@ -55,7 +55,7 @@ const initState = (): State => {
         maxWage: 1000,
         curWage: 200,
         cur: 0,
-        clickRate: 1,
+        clickRate: 500,
         action: 'HIRE',
       },
       Scientist: {
@@ -63,7 +63,7 @@ const initState = (): State => {
         maxWage: 1000,
         curWage: 200,
         cur: 0,
-        clickRate: 1,
+        clickRate: 100,
         action: 'RESEARCH',
       },
       Lawyer: {
@@ -71,7 +71,7 @@ const initState = (): State => {
         maxWage: 1000,
         curWage: 200,
         cur: 0,
-        clickRate: 1,
+        clickRate: 100,
         action: 'LOBBY',
       },
     },
@@ -82,6 +82,8 @@ const initState = (): State => {
       revenuePerBurn: 200,
       trashPerRecycle: 1,
       revenuePerRecycle: 100,
+
+
     },
   };
 }

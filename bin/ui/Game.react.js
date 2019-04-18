@@ -85,7 +85,17 @@ var Game = function (_React$Component) {
           React.createElement(Button, { label: 'Recycle', onClick: function onClick() {
               return dispatch({ type: 'RECYCLE' });
             } }),
-          React.createElement(LabelledValue, { label: 'Recycled', value: state.recycle.cur })
+          React.createElement(LabelledValue, { label: 'Recycled', value: state.recycle.cur }),
+          React.createElement(LabelledValue, { label: 'Recyclers', value: state.employees.Recycler.cur }),
+          React.createElement(Slider, {
+            name: 'Wage',
+            min: state.employees.Recycler.minWage,
+            max: state.employees.Recycler.maxWage,
+            value: state.employees.Recycler.curWage,
+            onChange: function onChange(wage) {
+              return dispatch({ type: 'SET_WAGE', role: 'Recycler', wage: wage });
+            }
+          })
         ),
         React.createElement(
           Card,
@@ -93,7 +103,7 @@ var Game = function (_React$Component) {
           React.createElement(Button, {
             label: 'Hire',
             onClick: function onClick() {
-              return dispatch({ type: 'HIRE', role: state.ui.selectedRole });
+              return dispatch({ type: 'HIRE' });
             }
           }),
           React.createElement(RadioPicker, {
@@ -101,6 +111,76 @@ var Game = function (_React$Component) {
             selected: state.ui.selectedRole,
             onChange: function onChange(role) {
               return dispatch({ type: 'SELECT_ROLE', role: role });
+            }
+          }),
+          React.createElement(LabelledValue, { label: 'Recruiters', value: state.employees.Recruiter.cur }),
+          React.createElement(Slider, {
+            name: 'Wage',
+            min: state.employees.Recruiter.minWage,
+            max: state.employees.Recruiter.maxWage,
+            value: state.employees.Recruiter.curWage,
+            onChange: function onChange(wage) {
+              return dispatch({ type: 'SET_WAGE', role: 'Recruiter', wage: wage });
+            }
+          })
+        ),
+        React.createElement(
+          Card,
+          null,
+          React.createElement(Button, {
+            label: 'Pay Employees',
+            onClick: function onClick() {
+              return dispatch({ type: 'PAY' });
+            }
+          }),
+          React.createElement(LabelledValue, { label: 'Managers', value: state.employees.Manager.cur }),
+          React.createElement(Slider, {
+            name: 'Wage',
+            min: state.employees.Manager.minWage,
+            max: state.employees.Manager.maxWage,
+            value: state.employees.Manager.curWage,
+            onChange: function onChange(wage) {
+              return dispatch({ type: 'SET_WAGE', role: 'Manager', wage: wage });
+            }
+          })
+        ),
+        React.createElement(
+          Card,
+          null,
+          React.createElement(Button, {
+            label: 'Research',
+            onClick: function onClick() {
+              return dispatch({ type: 'RESEARCH' });
+            }
+          }),
+          React.createElement(LabelledValue, { label: 'Scientists', value: state.employees.Scientist.cur }),
+          React.createElement(Slider, {
+            name: 'Wage',
+            min: state.employees.Scientist.minWage,
+            max: state.employees.Scientist.maxWage,
+            value: state.employees.Scientist.curWage,
+            onChange: function onChange(wage) {
+              return dispatch({ type: 'SET_WAGE', role: 'Scientist', wage: wage });
+            }
+          })
+        ),
+        React.createElement(
+          Card,
+          null,
+          React.createElement(Button, {
+            label: 'Lobby',
+            onClick: function onClick() {
+              return dispatch({ type: 'LOBBY' });
+            }
+          }),
+          React.createElement(LabelledValue, { label: 'Lawyers', value: state.employees.Lawyer.cur }),
+          React.createElement(Slider, {
+            name: 'Wage',
+            min: state.employees.Lawyer.minWage,
+            max: state.employees.Lawyer.maxWage,
+            value: state.employees.Lawyer.curWage,
+            onChange: function onChange(wage) {
+              return dispatch({ type: 'SET_WAGE', role: 'Lawyer', wage: wage });
             }
           })
         )

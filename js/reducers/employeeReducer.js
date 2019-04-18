@@ -10,9 +10,9 @@ const employeeReducer = (state: State, action): State => {
         employees: {
           ...state.employees,
           cur: state.employees.cur + 1,
-          [action.role]: {
-            ...state.employees[action.role],
-            cur: state.employees[action.role].cur + 1,
+          [state.ui.selectedRole]: {
+            ...state.employees[state.ui.selectedRole],
+            cur: state.employees[state.ui.selectedRole].cur + 1,
           },
         },
       };
@@ -26,6 +26,10 @@ const employeeReducer = (state: State, action): State => {
             curWage: action.wage,
           }
         },
+      };
+    case 'PAY':
+      return {
+
       };
   }
   return state;

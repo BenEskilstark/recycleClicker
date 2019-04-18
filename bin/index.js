@@ -13,6 +13,9 @@ var _require2 = require('./reducers/rootReducer'),
 var _require3 = require('./systems/employeeClickSystem'),
     initEmployeeClickSystem = _require3.initEmployeeClickSystem;
 
+var _require4 = require('./systems/trashSystem'),
+    initTrashSystem = _require4.initTrashSystem;
+
 var store = createStore(rootReducer);
 window.store = store; // useful for debugging
 
@@ -20,6 +23,7 @@ store.dispatch({ type: 'START' });
 
 // set up systems
 initEmployeeClickSystem(store);
+initTrashSystem(store);
 
 var interval = setInterval(function () {
   return store.dispatch({ type: 'TICK' });

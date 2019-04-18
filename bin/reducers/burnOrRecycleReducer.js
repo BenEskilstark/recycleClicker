@@ -11,6 +11,9 @@ var burnOrRecycleReducer = function burnOrRecycleReducer(state, action) {
 
   switch (action.type) {
     case 'BURN':
+      if (state.trash.cur == 0) {
+        return state;
+      }
       return _extends({}, state, {
         trash: _extends({}, state.trash, {
           cur: state.trash.cur - trashPerBurn
@@ -23,6 +26,9 @@ var burnOrRecycleReducer = function burnOrRecycleReducer(state, action) {
         })
       });
     case 'RECYCLE':
+      if (state.trash.cur == 0) {
+        return state;
+      }
       return _extends({}, state, {
         trash: _extends({}, state.trash, {
           cur: state.trash.cur - trashPerRecycle

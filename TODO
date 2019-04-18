@@ -2,16 +2,23 @@
  - - - - - - TODO - - - - - -
  - implement employees and wages
    - burners and recyclers have Pay button -- how does it activate?
-   - employees quit if they aren't paid
-   - managers, lawyers, scientists earn per some unit of time
- - implement trash amount going up over time
+   - employees quit (or stop working?) if they aren't paid
+ - implement research action
+ - implement research tech tree
+ - implement lobby action
+ - implement lobby tech tree
+ - implement ticker react component
+ - implement ticker system for sending messages
+ - handle perf stealing clicks
 
  - - - - - LATER - - - - - -
  - maybe(state, jsx, name) that shows/flickers comps
+ - tune rate of adding trash
 
  - - - - - - WISH - - - - - -
  - some sort of flicker/highlight when a value changes
- - employees quit if they are underpaid
+ - employees quit if they are //under//paid
+ - not all trash is recyclable
 
  - - - - - REFACTOR - - - - -
  - Pull out the cards in Game.react into their own comps
@@ -27,3 +34,6 @@
    - radio picker
  - put on github
  - hired employees click their button at a certain rate
+ - don't burn or recycle if trash == 0
+ - implement trash amount going up over time
+ - Added cards for scientist and lawyer

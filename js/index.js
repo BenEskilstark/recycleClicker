@@ -7,6 +7,7 @@ const ReactDOM = require('react-dom');
 const {rootReducer} = require('./reducers/rootReducer');
 
 const {initEmployeeClickSystem} = require('./systems/employeeClickSystem');
+const {initTrashSystem} = require('./systems/trashSystem');
 
 const store = createStore(rootReducer);
 window.store = store; // useful for debugging
@@ -15,6 +16,7 @@ store.dispatch({type: 'START'});
 
 // set up systems
 initEmployeeClickSystem(store);
+initTrashSystem(store);
 
 const interval = setInterval(
   () => store.dispatch({type: 'TICK'}),
