@@ -1,8 +1,9 @@
 
  - - - - - - TODO - - - - - -
  - implement employees and wages
-   - burners and recyclers have Pay button -- how does it activate?
-   - employees quit (or stop working?) if they aren't paid
+   - track number of employees expecting payment and # about to quit
+   - employees quit if they aren't paid
+   - managers click pay at a certain rate
  - implement research action
  - implement research tech tree
  - implement lobby action
@@ -21,6 +22,7 @@
  - not all trash is recyclable
 
  - - - - - REFACTOR - - - - -
+ - Refactor wages to be at contractor/employee level
  - Pull out the cards in Game.react into their own comps
 
  - - - - - - DONE - - - - - -
