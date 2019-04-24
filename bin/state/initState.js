@@ -80,6 +80,7 @@ var initState = function initState() {
       revenuePerBurn: 200,
       trashPerRecycle: 1,
       revenuePerRecycle: 100
+
     }
   };
 };

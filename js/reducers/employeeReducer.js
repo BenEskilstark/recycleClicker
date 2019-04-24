@@ -17,19 +17,31 @@ const employeeReducer = (state: State, action): State => {
         },
       };
     case 'SET_WAGE':
-      return {
-        ...state,
-        employees: {
-          ...state.employees,
-          [action.role]: {
-            ...state.employees[action.role],
+      const contractors = ['Recycler', 'Burner'];
+      const employees = ['Recruiter', 'Manager', 'Scientist', 'Lawyer'];
+      const nextEmployees = {...state.employees};
+      if (action.role == 'Contractor') {
+        for (const contractorRole of contractors) {
+          nextEmployees[contractorRole] = {
+            ...nextEmployees[contractorRole],
             curWage: action.wage,
           }
-        },
+        }
+      } else {
+        for (const employeeRole of employees) {
+          nextEmployees[employeeRole] = {
+            ...nextEmployees[employeeRole],
+            curWage: action.wage,
+          }
+        }
+      }
+      return {
+        ...state,
+        employees: nextEmployees,
       };
     case 'PAY':
       return {
-
+        ...state,
       };
   }
   return state;

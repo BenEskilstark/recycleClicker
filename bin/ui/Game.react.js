@@ -58,7 +58,14 @@ var Game = function (_React$Component) {
           null,
           React.createElement(LabelledValue, { label: 'Trash', value: state.trash.cur }),
           React.createElement(LabelledValue, { label: 'Money', value: getDisplayMoney(state) }),
-          React.createElement(LabelledValue, { label: 'Employees', value: state.employees.cur })
+          React.createElement(LabelledValue, {
+            label: 'Contractors',
+            value: state.employees.Recycler.cur + state.employees.Burner.cur
+          }),
+          React.createElement(LabelledValue, {
+            label: 'Employees',
+            value: state.employees.Manager.cur + state.employees.Recruiter.cur + state.employees.Scientist.cur + state.employees.Lawyer.cur
+          })
         ),
         React.createElement(Card, null),
         React.createElement(
@@ -68,16 +75,7 @@ var Game = function (_React$Component) {
               return dispatch({ type: 'BURN' });
             } }),
           React.createElement(LabelledValue, { label: 'Burned', value: state.burn.cur }),
-          React.createElement(LabelledValue, { label: 'Burners', value: state.employees.Burner.cur }),
-          React.createElement(Slider, {
-            name: 'Wage',
-            min: state.employees.Burner.minWage,
-            max: state.employees.Burner.maxWage,
-            value: state.employees.Burner.curWage,
-            onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Burner', wage: wage });
-            }
-          })
+          React.createElement(LabelledValue, { label: 'Burners', value: state.employees.Burner.cur })
         ),
         React.createElement(
           Card,
@@ -86,16 +84,7 @@ var Game = function (_React$Component) {
               return dispatch({ type: 'RECYCLE' });
             } }),
           React.createElement(LabelledValue, { label: 'Recycled', value: state.recycle.cur }),
-          React.createElement(LabelledValue, { label: 'Recyclers', value: state.employees.Recycler.cur }),
-          React.createElement(Slider, {
-            name: 'Wage',
-            min: state.employees.Recycler.minWage,
-            max: state.employees.Recycler.maxWage,
-            value: state.employees.Recycler.curWage,
-            onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Recycler', wage: wage });
-            }
-          })
+          React.createElement(LabelledValue, { label: 'Recyclers', value: state.employees.Recycler.cur })
         ),
         React.createElement(
           Card,
@@ -113,22 +102,13 @@ var Game = function (_React$Component) {
               return dispatch({ type: 'SELECT_ROLE', role: role });
             }
           }),
-          React.createElement(LabelledValue, { label: 'Recruiters', value: state.employees.Recruiter.cur }),
-          React.createElement(Slider, {
-            name: 'Wage',
-            min: state.employees.Recruiter.minWage,
-            max: state.employees.Recruiter.maxWage,
-            value: state.employees.Recruiter.curWage,
-            onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Recruiter', wage: wage });
-            }
-          })
+          React.createElement(LabelledValue, { label: 'Recruiters', value: state.employees.Recruiter.cur })
         ),
         React.createElement(
           Card,
           null,
           React.createElement(Button, {
-            label: 'Pay Employees',
+            label: 'Pay',
             onClick: function onClick() {
               return dispatch({ type: 'PAY' });
             }
@@ -136,11 +116,20 @@ var Game = function (_React$Component) {
           React.createElement(LabelledValue, { label: 'Managers', value: state.employees.Manager.cur }),
           React.createElement(Slider, {
             name: 'Wage',
-            min: state.employees.Manager.minWage,
-            max: state.employees.Manager.maxWage,
-            value: state.employees.Manager.curWage,
+            min: state.employees.Burner.minWage,
+            max: state.employees.Burner.maxWage,
+            value: state.employees.Burner.curWage,
             onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Manager', wage: wage });
+              return dispatch({ type: 'SET_WAGE', role: 'Contractor', wage: wage });
+            }
+          }),
+          React.createElement(Slider, {
+            name: 'Salary',
+            min: state.employees.Lawyer.minWage,
+            max: state.employees.Lawyer.maxWage,
+            value: state.employees.Lawyer.curWage,
+            onChange: function onChange(wage) {
+              return dispatch({ type: 'SET_WAGE', role: 'Employee', wage: wage });
             }
           })
         ),
@@ -153,16 +142,7 @@ var Game = function (_React$Component) {
               return dispatch({ type: 'RESEARCH' });
             }
           }),
-          React.createElement(LabelledValue, { label: 'Scientists', value: state.employees.Scientist.cur }),
-          React.createElement(Slider, {
-            name: 'Wage',
-            min: state.employees.Scientist.minWage,
-            max: state.employees.Scientist.maxWage,
-            value: state.employees.Scientist.curWage,
-            onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Scientist', wage: wage });
-            }
-          })
+          React.createElement(LabelledValue, { label: 'Scientists', value: state.employees.Scientist.cur })
         ),
         React.createElement(
           Card,
@@ -173,16 +153,7 @@ var Game = function (_React$Component) {
               return dispatch({ type: 'LOBBY' });
             }
           }),
-          React.createElement(LabelledValue, { label: 'Lawyers', value: state.employees.Lawyer.cur }),
-          React.createElement(Slider, {
-            name: 'Wage',
-            min: state.employees.Lawyer.minWage,
-            max: state.employees.Lawyer.maxWage,
-            value: state.employees.Lawyer.curWage,
-            onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Lawyer', wage: wage });
-            }
-          })
+          React.createElement(LabelledValue, { label: 'Lawyers', value: state.employees.Lawyer.cur })
         )
       );
 
