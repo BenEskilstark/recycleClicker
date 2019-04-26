@@ -5,6 +5,7 @@ const {employeeReducer} = require('./employeeReducer');
 const {tickReducer} = require('./tickReducer');
 const {trashReducer} = require('./trashReducer');
 const {uiReducer} = require('./uiReducer');
+const {tickerReducer} = require('./tickerReducer');
 
 const {initState} = require('../state/initState');
 
@@ -37,6 +38,8 @@ const rootReducer = ((state: State, action: Action): State => {
     case 'RESEARCH':
     case 'LOBBY':
       return state; // TODO
+    case 'TICKER':
+      return tickerReducer(state, action);
   }
   return state;
 });

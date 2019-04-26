@@ -31,6 +31,7 @@ class Game extends React.Component {
     const {state} = this;
     let content = (
       <React.Fragment>
+        <Ticker messages={state.ticker.messages} />
         <Card>
           <LabelledValue label="Trash" value={state.trash.cur} />
           <LabelledValue label="Money" value={getDisplayMoney(state)} />
@@ -80,17 +81,17 @@ class Game extends React.Component {
           <LabelledValue label="Managers" value={state.employees.Manager.cur} />
           <Slider
             name={'Wage'}
-            min={state.employees.Burner.minWage}
-            max={state.employees.Burner.maxWage}
-            value={state.employees.Burner.curWage}
-            onChange={(wage) => dispatch({type: 'SET_WAGE', role: 'Contractor', wage})}
+            min={state.employees.wages.contractor.minWage}
+            max={state.employees.wages.contractor.maxWage}
+            value={state.employees.wages.contractor.curWage}
+            onChange={(wage) => dispatch({type: 'SET_WAGE', role: 'contractor', wage})}
           />
           <Slider
             name={'Salary'}
-            min={state.employees.Lawyer.minWage}
-            max={state.employees.Lawyer.maxWage}
-            value={state.employees.Lawyer.curWage}
-            onChange={(wage) => dispatch({type: 'SET_WAGE', role: 'Employee', wage})}
+            min={state.employees.wages.employee.minWage}
+            max={state.employees.wages.employee.maxWage}
+            value={state.employees.wages.employee.curWage}
+            onChange={(wage) => dispatch({type: 'SET_WAGE', role: 'employee', wage})}
           />
         </Card>
 

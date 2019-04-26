@@ -10,7 +10,6 @@
  - implement lobby tech tree
  - implement ticker react component
  - implement ticker system for sending messages
- - handle perf stealing clicks
 
  - - - - - LATER - - - - - -
  - maybe(state, jsx, name) that shows/flickers comps
@@ -20,10 +19,11 @@
  - some sort of flicker/highlight when a value changes
  - employees quit if they are //under//paid
  - not all trash is recyclable
+ - God Mode for testing
 
  - - - - - REFACTOR - - - - -
- - Refactor wages to be at contractor/employee level
  - Pull out the cards in Game.react into their own comps
+ - handle perf stealing clicks (maybe?)
 
  - - - - - - DONE - - - - - -
  - config for default values of initial state
@@ -39,3 +39,4 @@
  - don't burn or recycle if trash == 0
  - implement trash amount going up over time
  - Added cards for scientist and lawyer
+ - Refactor wages to be at contractor/employee level

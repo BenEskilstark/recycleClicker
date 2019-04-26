@@ -20,13 +20,25 @@ export type State = {
     cur: number,
     max: number,
   },
+  ticker: {
+    messages: Array<string>,
+  }
   employees: {
     cur: number,
     roleOptions: Array<Role>,
+    wages: {
+      contractor: {
+        minWage: number,
+        maxWage: number,
+        curWage: number,
+      },
+      employee: {
+        minWage: number,
+        maxWage: number,
+        curWage: number,
+      },
+    },
     [role: Role]: {
-      minWage: number,
-      maxWage: number,
-      curWage: number,
       cur: number,
       clickRate: number,
       action: string,
@@ -39,6 +51,8 @@ export type State = {
     revenuePerBurn: number,
     trashPerRecycle: number,
     revenuePerRecycle: number,
+    contractors: Array<Role>,
+    employees: Array<Role>,
   },
 };
 
@@ -57,4 +71,3 @@ export type Action =
   {type: 'BURN'} |
   {type: 'RECYCLE'} |
   {type: 'HIRE', role: Role};
-

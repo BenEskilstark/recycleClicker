@@ -18,3 +18,6 @@ Date  Time Started  Time Spent  Work Completed
          8:15am      45 min     Made the rest of the cards, trash goes up over time
 
 4/23     8:00pm      30 min     Reorganize how wages work, add contractor/employee distinction
+
+4/25	   5:45pm      30 min     Refactor in contractor/employee distinction for wages
+                                Make basic ticker ui component and reducer
