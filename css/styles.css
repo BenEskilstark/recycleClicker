@@ -66,13 +66,13 @@ button:hover {
 .labelName {
   display: inline-block;
   text-align: right;
-  width: 50%;
+  width: 90%;
 }
 
 .labelValue {
   display: inline-block;
   text-align: right;
-  width: 50%;
+  width: 20%;
 }
 
 /* ------------------------------------------------------------------ */

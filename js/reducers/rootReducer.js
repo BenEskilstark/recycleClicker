@@ -32,6 +32,9 @@ const rootReducer = ((state: State, action: Action): State => {
     case 'HIRE':
     case 'SET_WAGE':
     case 'PAY':
+    case 'NEED_PAY':
+    case 'ABOUT_TO_LEAVE':
+    case 'QUIT':
       return employeeReducer(state, action);
     case 'SELECT_ROLE':
       return uiReducer(state, action);

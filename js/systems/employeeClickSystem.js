@@ -12,6 +12,7 @@ const unDepressedStr =
 const initEmployeeClickSystem = (store) => {
 
   let time = store.getState().time;
+  const {dispatch} = store;
   store.subscribe(() => {
     const state = store.getState();
     // only check on a new tick
@@ -22,18 +23,14 @@ const initEmployeeClickSystem = (store) => {
 
     for (const roleOption of state.employees.roleOptions) {
       const role = state.employees[roleOption];
-      for (let i = 0; i < role.cur; i++) {
-        const button = document.getElementById(role.action + '_button');
-        if (time % role.clickRate == 0) {
-          if (i == 0) {
-            setTimeout(() => {
-              button.setAttribute('style', depressedStr);
-              setTimeout(() => button.setAttribute('style', unDepressedStr), 250);
-            }, 0);
-          }
+      const button = document.getElementById(role.action + '_button');
+      if (time % role.clickRate == 0) {
+        setTimeout(() => {
+          button.setAttribute('style', depressedStr);
+          setTimeout(() => button.setAttribute('style', unDepressedStr), 150);
+        }, 0);
 
-          store.dispatch({type: role.action});
-        }
+        dispatch({type: role.action, num: role.cur});
       }
     }
   });

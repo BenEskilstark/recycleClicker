@@ -1,21 +1,20 @@
 
  - - - - - - TODO - - - - - -
  - implement employees and wages
-   - track number of employees expecting payment and # about to quit
-   - employees quit if they aren't paid
-   - managers click pay at a certain rate
+   - remove wage sliders -- changing wage can be covered with research
+ - install npm on other laptop
  - implement research action
  - implement research tech tree
  - implement lobby action
  - implement lobby tech tree
- - implement ticker react component
- - implement ticker system for sending messages
 
  - - - - - LATER - - - - - -
  - maybe(state, jsx, name) that shows/flickers comps
  - tune rate of adding trash
 
  - - - - - - WISH - - - - - -
+ - should all employees press button together, or should the button visually
+   pressed many times?
  - some sort of flicker/highlight when a value changes
  - employees quit if they are //under//paid
  - not all trash is recyclable
@@ -40,3 +39,9 @@
  - implement trash amount going up over time
  - Added cards for scientist and lawyer
  - Refactor wages to be at contractor/employee level
+ - track number of employees expecting payment and # about to quit
+ - managers click pay at a certain rate
+ - system where employees quit if they aren't paid
+ - implement ticker react component
+ - implement ticker system for sending messages
+ - implement quantity on employee click actions so they don't fire tons of actions

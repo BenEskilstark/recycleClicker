@@ -29,18 +29,24 @@ const initState = (): State => {
     employees: {
       cur: 0,
       roleOptions: ['Burner', 'Recycler', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
-      wages: {
-        contractor: {
-          minWage: 10,
-          maxWage: 500,
-          curWage: 20,
-        },
-        employee: {
-          minWage: 100,
-          maxWage: 1000,
-          curWage: 200,
-        },
-      }
+      contractor: {
+        cur: 0,
+        minWage: 10,
+        maxWage: 500,
+        curWage: 20,
+        needPay: 0,
+        aboutToLeave: 0,
+        quit: 0,
+      },
+      employee: {
+        cur: 0,
+        minWage: 100,
+        maxWage: 1000,
+        curWage: 200,
+        needPay: 0,
+        aboutToLeave: 0,
+        quit: 0,
+      },
       Burner: {
         cur: 0,
         clickRate: 100,

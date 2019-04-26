@@ -79,19 +79,21 @@ class Game extends React.Component {
             onClick={() => dispatch({type: 'PAY'})}
           />
           <LabelledValue label="Managers" value={state.employees.Manager.cur} />
-          <Slider
-            name={'Wage'}
-            min={state.employees.wages.contractor.minWage}
-            max={state.employees.wages.contractor.maxWage}
-            value={state.employees.wages.contractor.curWage}
-            onChange={(wage) => dispatch({type: 'SET_WAGE', role: 'contractor', wage})}
+          <LabelledValue
+            label="Contractors to pay"
+            value={state.employees.contractor.needPay}
           />
-          <Slider
-            name={'Salary'}
-            min={state.employees.wages.employee.minWage}
-            max={state.employees.wages.employee.maxWage}
-            value={state.employees.wages.employee.curWage}
-            onChange={(wage) => dispatch({type: 'SET_WAGE', role: 'employee', wage})}
+          <LabelledValue
+            label="Contractors about to quit"
+            value={state.employees.contractor.aboutToLeave}
+          />
+          <LabelledValue
+            label="Employees to pay"
+            value={state.employees.employee.needPay}
+          />
+          <LabelledValue
+            label="Employees about to quit"
+            value={state.employees.employee.aboutToLeave}
           />
         </Card>
 

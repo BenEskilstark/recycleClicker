@@ -8,7 +8,8 @@ const burnOrRecycleReducer = (state: State, action): State => {
     trashPerRecycle, revenuePerRecycle,
   } = state.config;
   switch (action.type) {
-    case 'BURN':
+    case 'BURN': {
+      const {num} = action;
       if (state.trash.cur == 0) {
         return state;
       }
@@ -16,18 +17,20 @@ const burnOrRecycleReducer = (state: State, action): State => {
         ...state,
         trash: {
           ...state.trash,
-          cur: state.trash.cur - trashPerBurn,
+          cur: state.trash.cur - trashPerBurn * num,
         },
         burn: {
           ...state.burn,
-          cur: state.burn.cur + trashPerBurn,
+          cur: state.burn.cur + trashPerBurn * num,
         },
         money: {
           ...state.money,
-          cur: state.money.cur + revenuePerBurn,
+          cur: state.money.cur + revenuePerBurn * num,
         },
       };
-    case 'RECYCLE':
+    }
+    case 'RECYCLE': {
+      const {num} = action;
       if (state.trash.cur == 0) {
         return state;
       }
@@ -35,17 +38,18 @@ const burnOrRecycleReducer = (state: State, action): State => {
         ...state,
         trash: {
           ...state.trash,
-          cur: state.trash.cur - trashPerRecycle,
+          cur: state.trash.cur - trashPerRecycle * num,
         },
         recycle: {
           ...state.recycle,
-          cur: state.recycle.cur + trashPerRecycle,
+          cur: state.recycle.cur + trashPerRecycle * num,
         },
         money: {
           ...state.money,
-          cur: state.money.cur + revenuePerRecycle,
+          cur: state.money.cur + revenuePerRecycle * num,
         },
       };
+    }
   }
 }
 
