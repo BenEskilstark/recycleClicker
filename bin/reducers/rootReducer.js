@@ -15,8 +15,11 @@ var _require4 = require('./trashReducer'),
 var _require5 = require('./uiReducer'),
     uiReducer = _require5.uiReducer;
 
-var _require6 = require('../state/initState'),
-    initState = _require6.initState;
+var _require6 = require('./tickerReducer'),
+    tickerReducer = _require6.tickerReducer;
+
+var _require7 = require('../state/initState'),
+    initState = _require7.initState;
 
 var rootReducer = function rootReducer(state, action) {
   if (state === undefined) return initState();
@@ -40,12 +43,17 @@ var rootReducer = function rootReducer(state, action) {
     case 'HIRE':
     case 'SET_WAGE':
     case 'PAY':
+    case 'NEED_PAY':
+    case 'ABOUT_TO_LEAVE':
+    case 'QUIT':
       return employeeReducer(state, action);
     case 'SELECT_ROLE':
       return uiReducer(state, action);
     case 'RESEARCH':
     case 'LOBBY':
       return state; // TODO
+    case 'TICKER':
+      return tickerReducer(state, action);
   }
   return state;
 };

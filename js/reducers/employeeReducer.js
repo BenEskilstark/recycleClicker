@@ -37,7 +37,7 @@ const employeeReducer = (state: State, action): State => {
       };
     case 'PAY': {
       const {roleType, num} = action;
-      const {employees, money} = this.state;
+      const {employees, money} = state;
       // can't pay if you can't afford the wage
       const wage = employees[roleType].curWage;
       if (wage > money.cur) {
@@ -63,8 +63,8 @@ const employeeReducer = (state: State, action): State => {
       };
     }
     case 'NEED_PAY': {
-      const {roleType} = action;
-      const {employees} = this.state;
+      const {roleType, num} = action;
+      const {employees} = state;
       const needPay =
         employees[roleType].needPay < employees[roleType].cur ? num : 0;
       return {
@@ -79,8 +79,8 @@ const employeeReducer = (state: State, action): State => {
       };
     }
     case 'ABOUT_TO_LEAVE': {
-      const {roleType} = action;
-      const {employees} = this.state;
+      const {roleType, num} = action;
+      const {employees} = state;
       const aboutToLeave = employees[roleType].needPay > 0 ? num : 0;
       const needPay = employees[roleType].needPay - aboutToLeave;
       return {
@@ -97,7 +97,7 @@ const employeeReducer = (state: State, action): State => {
     }
     case 'QUIT': {
       const {roleType, num} = action;
-      const {employees} = this.state;
+      const {employees} = state;
       const quit = employees[roleType].aboutToLeave > 0 ? num : 0;
       const aboutToLeave = employees[roleType].aboutToLeave - quit;
       return {

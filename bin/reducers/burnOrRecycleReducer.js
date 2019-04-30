@@ -11,35 +11,43 @@ var burnOrRecycleReducer = function burnOrRecycleReducer(state, action) {
 
   switch (action.type) {
     case 'BURN':
-      if (state.trash.cur == 0) {
-        return state;
+      {
+        var num = action.num;
+
+        if (state.trash.cur == 0) {
+          return state;
+        }
+        return _extends({}, state, {
+          trash: _extends({}, state.trash, {
+            cur: state.trash.cur - trashPerBurn * num
+          }),
+          burn: _extends({}, state.burn, {
+            cur: state.burn.cur + trashPerBurn * num
+          }),
+          money: _extends({}, state.money, {
+            cur: state.money.cur + revenuePerBurn * num
+          })
+        });
       }
-      return _extends({}, state, {
-        trash: _extends({}, state.trash, {
-          cur: state.trash.cur - trashPerBurn
-        }),
-        burn: _extends({}, state.burn, {
-          cur: state.burn.cur + trashPerBurn
-        }),
-        money: _extends({}, state.money, {
-          cur: state.money.cur + revenuePerBurn
-        })
-      });
     case 'RECYCLE':
-      if (state.trash.cur == 0) {
-        return state;
+      {
+        var _num = action.num;
+
+        if (state.trash.cur == 0) {
+          return state;
+        }
+        return _extends({}, state, {
+          trash: _extends({}, state.trash, {
+            cur: state.trash.cur - trashPerRecycle * _num
+          }),
+          recycle: _extends({}, state.recycle, {
+            cur: state.recycle.cur + trashPerRecycle * _num
+          }),
+          money: _extends({}, state.money, {
+            cur: state.money.cur + revenuePerRecycle * _num
+          })
+        });
       }
-      return _extends({}, state, {
-        trash: _extends({}, state.trash, {
-          cur: state.trash.cur - trashPerRecycle
-        }),
-        recycle: _extends({}, state.recycle, {
-          cur: state.recycle.cur + trashPerRecycle
-        }),
-        money: _extends({}, state.money, {
-          cur: state.money.cur + revenuePerRecycle
-        })
-      });
   }
 };
 

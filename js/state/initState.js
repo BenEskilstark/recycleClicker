@@ -25,7 +25,7 @@ const initState = (): State => {
     },
     ticker: {
       messages: [],
-    }
+    },
     employees: {
       cur: 0,
       roleOptions: ['Burner', 'Recycler', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
