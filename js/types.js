@@ -26,17 +26,23 @@ export type State = {
   employees: {
     cur: number,
     roleOptions: Array<Role>,
-    wages: {
-      contractor: {
-        minWage: number,
-        maxWage: number,
-        curWage: number,
-      },
-      employee: {
-        minWage: number,
-        maxWage: number,
-        curWage: number,
-      },
+    contractor: {
+      cur: number,
+      minWage: number,
+      maxWage: number,
+      curWage: number,
+      needPay: number,
+      aboutToLeave: number,
+      quit: number,
+    },
+    employee: {
+      cur: number,
+      minWage: number,
+      maxWage: number,
+      curWage: number,
+      needPay: number,
+      aboutToLeave: number,
+      quit: number,
     },
     [role: Role]: {
       cur: number,
@@ -60,6 +66,7 @@ export type Role =
   'Burner' |
   'Recycler' |
   'Manager' |
+  'Recruiter' |
   'Scientist' |
   'Lawyer';
 

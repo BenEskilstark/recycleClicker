@@ -33,7 +33,7 @@ const initState = (): State => {
         cur: 0,
         minWage: 10,
         maxWage: 500,
-        curWage: 20,
+        curWage: 2000,
         needPay: 0,
         aboutToLeave: 0,
         quit: 0,
