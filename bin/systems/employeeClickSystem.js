@@ -7,6 +7,8 @@ var unDepressedStr = 'background: rgba(158,158,158,0.1); ' + 'color: rgba(0, 0, 
 var initEmployeeClickSystem = function initEmployeeClickSystem(store) {
 
   var time = store.getState().time;
+  var dispatch = store.dispatch;
+
   store.subscribe(function () {
     var state = store.getState();
     // only check on a new tick
@@ -20,30 +22,25 @@ var initEmployeeClickSystem = function initEmployeeClickSystem(store) {
     var _iteratorError = undefined;
 
     try {
-      for (var _iterator = state.employees.roleOptions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var _loop = function _loop() {
         var roleOption = _step.value;
 
         var role = state.employees[roleOption];
+        var button = document.getElementById(role.action + '_button');
+        if (time % role.clickRate == 0 && role.cur > 0) {
+          setTimeout(function () {
+            button.setAttribute('style', depressedStr);
+            setTimeout(function () {
+              return button.setAttribute('style', unDepressedStr);
+            }, 150);
+          }, 0);
 
-        var _loop = function _loop(i) {
-          var button = document.getElementById(role.action + '_button');
-          if (time % role.clickRate == 0) {
-            if (i == 0) {
-              setTimeout(function () {
-                button.setAttribute('style', depressedStr);
-                setTimeout(function () {
-                  return button.setAttribute('style', unDepressedStr);
-                }, 250);
-              }, 0);
-            }
-
-            store.dispatch({ type: role.action });
-          }
-        };
-
-        for (var i = 0; i < role.cur; i++) {
-          _loop(i);
+          dispatch({ type: role.action, num: role.cur });
         }
+      };
+
+      for (var _iterator = state.employees.roleOptions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        _loop();
       }
     } catch (err) {
       _didIteratorError = true;

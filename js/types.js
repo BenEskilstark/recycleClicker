@@ -22,7 +22,7 @@ export type State = {
   },
   ticker: {
     messages: Array<string>,
-  }
+  },
   employees: {
     cur: number,
     roleOptions: Array<Role>,

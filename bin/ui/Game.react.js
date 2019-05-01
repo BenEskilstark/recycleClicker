@@ -53,6 +53,7 @@ var Game = function (_React$Component) {
       var content = React.createElement(
         React.Fragment,
         null,
+        React.createElement(Ticker, { messages: state.ticker.messages }),
         React.createElement(
           Card,
           null,
@@ -72,7 +73,7 @@ var Game = function (_React$Component) {
           Card,
           null,
           React.createElement(Button, { label: 'Burn', onClick: function onClick() {
-              return dispatch({ type: 'BURN' });
+              return dispatch({ type: 'BURN', num: 1 });
             } }),
           React.createElement(LabelledValue, { label: 'Burned', value: state.burn.cur }),
           React.createElement(LabelledValue, { label: 'Burners', value: state.employees.Burner.cur })
@@ -81,7 +82,7 @@ var Game = function (_React$Component) {
           Card,
           null,
           React.createElement(Button, { label: 'Recycle', onClick: function onClick() {
-              return dispatch({ type: 'RECYCLE' });
+              return dispatch({ type: 'RECYCLE', num: 1 });
             } }),
           React.createElement(LabelledValue, { label: 'Recycled', value: state.recycle.cur }),
           React.createElement(LabelledValue, { label: 'Recyclers', value: state.employees.Recycler.cur })
@@ -92,7 +93,7 @@ var Game = function (_React$Component) {
           React.createElement(Button, {
             label: 'Hire',
             onClick: function onClick() {
-              return dispatch({ type: 'HIRE' });
+              return dispatch({ type: 'HIRE', num: 1 });
             }
           }),
           React.createElement(RadioPicker, {
@@ -107,30 +108,25 @@ var Game = function (_React$Component) {
         React.createElement(
           Card,
           null,
-          React.createElement(Button, {
-            label: 'Pay',
-            onClick: function onClick() {
-              return dispatch({ type: 'PAY' });
-            }
-          }),
+          React.createElement(Button, { label: 'Pay', onClick: function onClick() {
+              return dispatch({ type: 'PAY', num: 1 });
+            } }),
           React.createElement(LabelledValue, { label: 'Managers', value: state.employees.Manager.cur }),
-          React.createElement(Slider, {
-            name: 'Wage',
-            min: state.employees.Burner.minWage,
-            max: state.employees.Burner.maxWage,
-            value: state.employees.Burner.curWage,
-            onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Contractor', wage: wage });
-            }
+          React.createElement(LabelledValue, {
+            label: 'Contractors to pay',
+            value: state.employees.contractor.needPay
           }),
-          React.createElement(Slider, {
-            name: 'Salary',
-            min: state.employees.Lawyer.minWage,
-            max: state.employees.Lawyer.maxWage,
-            value: state.employees.Lawyer.curWage,
-            onChange: function onChange(wage) {
-              return dispatch({ type: 'SET_WAGE', role: 'Employee', wage: wage });
-            }
+          React.createElement(LabelledValue, {
+            label: 'Contrs. about to quit',
+            value: state.employees.contractor.aboutToLeave
+          }),
+          React.createElement(LabelledValue, {
+            label: 'Employees to pay',
+            value: state.employees.employee.needPay
+          }),
+          React.createElement(LabelledValue, {
+            label: 'Empls. about to quit',
+            value: state.employees.employee.aboutToLeave
           })
         ),
         React.createElement(
@@ -139,7 +135,7 @@ var Game = function (_React$Component) {
           React.createElement(Button, {
             label: 'Research',
             onClick: function onClick() {
-              return dispatch({ type: 'RESEARCH' });
+              return dispatch({ type: 'RESEARCH', num: 1 });
             }
           }),
           React.createElement(LabelledValue, { label: 'Scientists', value: state.employees.Scientist.cur })
@@ -150,7 +146,7 @@ var Game = function (_React$Component) {
           React.createElement(Button, {
             label: 'Lobby',
             onClick: function onClick() {
-              return dispatch({ type: 'LOBBY' });
+              return dispatch({ type: 'LOBBY', num: 1 });
             }
           }),
           React.createElement(LabelledValue, { label: 'Lawyers', value: state.employees.Lawyer.cur })

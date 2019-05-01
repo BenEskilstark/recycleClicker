@@ -8,7 +8,7 @@ const {rootReducer} = require('./reducers/rootReducer');
 
 const {initEmployeeClickSystem} = require('./systems/employeeClickSystem');
 const {initTrashSystem} = require('./systems/trashSystem');
-const {initEmployeeNeedPaySystem} = require('./systems/initEmployeeNeedPaySystem');
+const {initEmployeeNeedPaySystem} = require('./systems/employeeNeedPaySystem');
 
 const store = createStore(rootReducer);
 window.store = store; // useful for debugging

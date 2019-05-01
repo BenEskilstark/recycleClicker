@@ -16,7 +16,7 @@ var _require3 = require('./systems/employeeClickSystem'),
 var _require4 = require('./systems/trashSystem'),
     initTrashSystem = _require4.initTrashSystem;
 
-var _require5 = require('./systems/initEmployeeNeedPaySystem'),
+var _require5 = require('./systems/employeeNeedPaySystem'),
     initEmployeeNeedPaySystem = _require5.initEmployeeNeedPaySystem;
 
 var store = createStore(rootReducer);

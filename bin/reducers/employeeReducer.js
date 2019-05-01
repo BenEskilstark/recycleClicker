@@ -4,23 +4,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var max = Math.max,
+    min = Math.min,
+    floor = Math.floor,
+    random = Math.random;
+
+
 var employeeReducer = function employeeReducer(state, action) {
   switch (action.type) {
     case 'HIRE':
       {
         var _extends2;
 
-        var _num = action.num;
+        var num = action.num;
 
         var role = state.ui.selectedRole;
-        var roleType = state.employees.includes(role) ? 'employee' : 'contractor';
+        var roleType = state.config.employees.includes(role) ? 'employee' : 'contractor';
         return _extends({}, state, {
           employees: _extends({}, state.employees, (_extends2 = {
-            cur: state.employees.cur + _num
+            cur: state.employees.cur + num
           }, _defineProperty(_extends2, roleType, _extends({}, state.employees[roleType], {
-            cur: state.employees[roleType].cur + _num
+            cur: state.employees[roleType].cur + num
           })), _defineProperty(_extends2, role, _extends({}, state.employees[role], {
-            cur: state.employees[role].cur + _num
+            cur: state.employees[role].cur + num
           })), _extends2))
         });
       }
@@ -32,22 +38,25 @@ var employeeReducer = function employeeReducer(state, action) {
       });
     case 'PAY':
       {
-        var _roleType = action.roleType,
-            _num2 = action.num;
-        var _state = undefined.state,
-            employees = _state.employees,
-            money = _state.money;
+        var _num = action.num;
+
+        var _roleType = random() < 0.5 ? 'contractor' : 'employee';
+        var employees = state.employees,
+            money = state.money;
         // can't pay if you can't afford the wage
 
         var wage = employees[_roleType].curWage;
         if (wage > money.cur) {
           return state;
         }
-        var aboutToLeave = employees[_roleType].aboutToLeave > 0 ? _num2 : 0;
-        var needPay = employees[_roleType].needPay > 0 && aboutToLeave == 0 ? _num2 : 0;
+        var payableNum = min(floor(money.cur / wage), _num);
+
+        var aboutToLeave = min(employees[_roleType].aboutToLeave, payableNum);
+        var needPay = min(employees[_roleType].needPay - aboutToLeave, payableNum);
+        var paidWage = max(aboutToLeave, needPay) * wage;
         return _extends({}, state, {
           money: _extends({}, state.money, {
-            cur: money.cur - wage
+            cur: money.cur - paidWage
           }),
           employees: _extends({}, state.employees, _defineProperty({}, _roleType, _extends({}, state.employees[_roleType], {
             needPay: employees[_roleType].needPay - needPay,
@@ -57,10 +66,12 @@ var employeeReducer = function employeeReducer(state, action) {
       }
     case 'NEED_PAY':
       {
-        var _roleType2 = action.roleType;
-        var _employees = undefined.state.employees;
+        var _roleType2 = action.roleType,
+            _num2 = action.num;
+        var _employees = state.employees;
 
-        var _needPay = _employees[_roleType2].needPay < _employees[_roleType2].cur ? num : 0;
+        var byRoleType = _employees[_roleType2];
+        var _needPay = min(byRoleType.cur - byRoleType.needPay - byRoleType.aboutToLeave, _num2);
         return _extends({}, state, {
           employees: _extends({}, state.employees, _defineProperty({}, _roleType2, _extends({}, state.employees[_roleType2], {
             needPay: _employees[_roleType2].needPay + _needPay
@@ -69,14 +80,16 @@ var employeeReducer = function employeeReducer(state, action) {
       }
     case 'ABOUT_TO_LEAVE':
       {
-        var _roleType3 = action.roleType;
-        var _employees2 = undefined.state.employees;
+        var _roleType3 = action.roleType,
+            _num3 = action.num;
+        var _employees2 = state.employees;
 
-        var _aboutToLeave = _employees2[_roleType3].needPay > 0 ? num : 0;
-        var _needPay2 = _employees2[_roleType3].needPay - _aboutToLeave;
+        var _byRoleType = _employees2[_roleType3];
+        var _aboutToLeave = min(_byRoleType.needPay, _num3);
+        var _needPay2 = _byRoleType.needPay - _aboutToLeave;
         return _extends({}, state, {
-          employees: _extends({}, state.employees, _defineProperty({}, _roleType3, _extends({}, state.employees[_roleType3], {
-            aboutToLeave: _employees2[_roleType3].aboutToLeave + _aboutToLeave,
+          employees: _extends({}, state.employees, _defineProperty({}, _roleType3, _extends({}, _byRoleType, {
+            aboutToLeave: _byRoleType.aboutToLeave + _aboutToLeave,
             needPay: _needPay2
           })))
         });
@@ -84,14 +97,18 @@ var employeeReducer = function employeeReducer(state, action) {
     case 'QUIT':
       {
         var _roleType4 = action.roleType,
-            _num3 = action.num;
-        var _employees3 = undefined.state.employees;
+            _num4 = action.num;
+        var _employees3 = state.employees;
 
-        var quit = _employees3[_roleType4].aboutToLeave > 0 ? _num3 : 0;
-        var _aboutToLeave2 = _employees3[_roleType4].aboutToLeave - quit;
+        var _byRoleType2 = _employees3[_roleType4];
+        var quit = min(_byRoleType2.aboutToLeave, _num4);
+        var _aboutToLeave2 = _byRoleType2.aboutToLeave - quit;
         return _extends({}, state, {
-          employees: _extends({}, state.employees, _defineProperty({}, _roleType4, _extends({}, state.employees[_roleType4], {
-            quit: _employees3[_roleType4].quit + quit,
+          employees: _extends({
+            cur: _employees3.cur - quit
+          }, state.employees, _defineProperty({}, _roleType4, _extends({}, _byRoleType2, {
+            cur: _byRoleType2.cur - quit,
+            quit: _byRoleType2.quit + quit,
             aboutToLeave: _aboutToLeave2
           })))
         });

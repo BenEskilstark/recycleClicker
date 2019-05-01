@@ -1,13 +1,14 @@
 // @flow
 
 import type {State} from '../types';
+const {max, min, floor, random} = Math;
 
 const employeeReducer = (state: State, action): State => {
   switch (action.type) {
     case 'HIRE': {
       const {num} = action;
       const role = state.ui.selectedRole;
-      const roleType = state.employees.includes(role) ? 'employee' : 'contractor';
+      const roleType = state.config.employees.includes(role) ? 'employee' : 'contractor';
       return {
         ...state,
         employees: {
@@ -36,21 +37,24 @@ const employeeReducer = (state: State, action): State => {
         },
       };
     case 'PAY': {
-      const {roleType, num} = action;
+      const {num} = action;
+      const roleType = random() < 0.5 ? 'contractor' : 'employee';
       const {employees, money} = state;
       // can't pay if you can't afford the wage
       const wage = employees[roleType].curWage;
       if (wage > money.cur) {
         return state;
       }
-      const aboutToLeave = employees[roleType].aboutToLeave > 0 ? num : 0;
-      const needPay =
-        employees[roleType].needPay > 0 && aboutToLeave == 0 ? num : 0;
+      const payableNum = min(floor(money.cur / wage), num);
+
+      const aboutToLeave = min(employees[roleType].aboutToLeave, payableNum);
+      const needPay = min(employees[roleType].needPay - aboutToLeave, payableNum);
+      const paidWage = max(aboutToLeave, needPay) * wage;
       return {
         ...state,
         money: {
           ...state.money,
-          cur: money.cur - wage,
+          cur: money.cur - paidWage,
         },
         employees: {
           ...state.employees,
@@ -65,8 +69,9 @@ const employeeReducer = (state: State, action): State => {
     case 'NEED_PAY': {
       const {roleType, num} = action;
       const {employees} = state;
+      const byRoleType = employees[roleType];
       const needPay =
-        employees[roleType].needPay < employees[roleType].cur ? num : 0;
+        min(byRoleType.cur - byRoleType.needPay - byRoleType.aboutToLeave, num);
       return {
         ...state,
         employees: {
@@ -81,15 +86,16 @@ const employeeReducer = (state: State, action): State => {
     case 'ABOUT_TO_LEAVE': {
       const {roleType, num} = action;
       const {employees} = state;
-      const aboutToLeave = employees[roleType].needPay > 0 ? num : 0;
-      const needPay = employees[roleType].needPay - aboutToLeave;
+      const byRoleType = employees[roleType];
+      const aboutToLeave = min(byRoleType.needPay, num);
+      const needPay = byRoleType.needPay - aboutToLeave;
       return {
         ...state,
         employees: {
           ...state.employees,
           [roleType]: {
-            ...state.employees[roleType],
-            aboutToLeave: employees[roleType].aboutToLeave + aboutToLeave,
+            ...byRoleType,
+            aboutToLeave: byRoleType.aboutToLeave + aboutToLeave,
             needPay,
           }
         },
@@ -98,15 +104,18 @@ const employeeReducer = (state: State, action): State => {
     case 'QUIT': {
       const {roleType, num} = action;
       const {employees} = state;
-      const quit = employees[roleType].aboutToLeave > 0 ? num : 0;
-      const aboutToLeave = employees[roleType].aboutToLeave - quit;
+      const byRoleType = employees[roleType];
+      const quit = min(byRoleType.aboutToLeave, num);
+      const aboutToLeave = byRoleType.aboutToLeave - quit;
       return {
         ...state,
         employees: {
+          cur: employees.cur - quit,
           ...state.employees,
           [roleType]: {
-            ...state.employees[roleType],
-            quit: employees[roleType].quit + quit,
+            ...byRoleType,
+            cur: byRoleType.cur - quit,
+            quit: byRoleType.quit + quit,
             aboutToLeave,
           }
         },

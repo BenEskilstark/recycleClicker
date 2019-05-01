@@ -21,53 +21,56 @@ var initState = function initState() {
     money: {
       cur: 10000
     },
+    ticker: {
+      messages: []
+    },
     employees: {
       cur: 0,
       roleOptions: ['Burner', 'Recycler', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
-      Burner: {
+      contractor: {
+        cur: 0,
         minWage: 10,
         maxWage: 500,
         curWage: 20,
+        needPay: 0,
+        aboutToLeave: 0,
+        quit: 0
+      },
+      employee: {
+        cur: 0,
+        minWage: 100,
+        maxWage: 1000,
+        curWage: 200,
+        needPay: 0,
+        aboutToLeave: 0,
+        quit: 0
+      },
+      Burner: {
         cur: 0,
         clickRate: 100,
         action: 'BURN'
       },
       Recycler: {
-        minWage: 10,
-        maxWage: 500,
-        curWage: 20,
         cur: 0,
         clickRate: 100,
         action: 'RECYCLE'
       },
       Manager: {
-        minWage: 100,
-        maxWage: 1000,
-        curWage: 200,
         cur: 0,
         clickRate: 100,
         action: 'PAY'
       },
       Recruiter: {
-        minWage: 100,
-        maxWage: 1000,
-        curWage: 200,
         cur: 0,
         clickRate: 500,
         action: 'HIRE'
       },
       Scientist: {
-        minWage: 100,
-        maxWage: 1000,
-        curWage: 200,
         cur: 0,
         clickRate: 100,
         action: 'RESEARCH'
       },
       Lawyer: {
-        minWage: 100,
-        maxWage: 1000,
-        curWage: 200,
         cur: 0,
         clickRate: 100,
         action: 'LOBBY'
@@ -79,8 +82,11 @@ var initState = function initState() {
       trashPerBurn: 1,
       revenuePerBurn: 200,
       trashPerRecycle: 1,
-      revenuePerRecycle: 100
+      revenuePerRecycle: 100,
 
+      contractors: ['Recycler', 'Burner'],
+      employees: ['Recruiter', 'Manager', 'Scientist', 'Lawyer'],
+      allRoles: ['Burner', 'Recycler', 'Recruiter', 'Manager', 'Scientist', 'Lawyer']
     }
   };
 };

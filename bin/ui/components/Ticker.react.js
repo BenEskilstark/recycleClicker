@@ -11,6 +11,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('React');
 
 // props:
+// messages: Array of messages to try to display
+
+var NUM_MESSAGES_TO_DISPLAY = 5;
 
 var Ticker = function (_React$Component) {
   _inherits(Ticker, _React$Component);
@@ -24,7 +27,27 @@ var Ticker = function (_React$Component) {
   _createClass(Ticker, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', null);
+      var messages = this.props.messages;
+
+      var toDisplay = [];
+      var numMessagesToDisplay = Math.min(NUM_MESSAGES_TO_DISPLAY, messages.length);
+      for (var i = 0; i < numMessagesToDisplay; i++) {
+
+        var message = messages[i];
+        if (i == numMessagesToDisplay - 1) {
+          message = '> ' + message;
+        }
+        toDisplay.push(React.createElement(
+          'span',
+          { key: 'message_' + message + '_' + i },
+          message
+        ));
+      }
+      return React.createElement(
+        'div',
+        { className: 'ticker' },
+        toDisplay
+      );
     }
   }]);
 

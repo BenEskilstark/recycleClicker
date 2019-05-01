@@ -24,7 +24,7 @@ const initEmployeeClickSystem = (store) => {
     for (const roleOption of state.employees.roleOptions) {
       const role = state.employees[roleOption];
       const button = document.getElementById(role.action + '_button');
-      if (time % role.clickRate == 0) {
+      if (time % role.clickRate == 0 && role.cur > 0) {
         setTimeout(() => {
           button.setAttribute('style', depressedStr);
           setTimeout(() => button.setAttribute('style', unDepressedStr), 150);

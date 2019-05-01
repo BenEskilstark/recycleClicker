@@ -26,7 +26,7 @@ body {
   display: inline-block;
 }
 
-.card:nth-child(even) {
+.card:nth-child(odd) {
   float: right;
 }
 
@@ -65,14 +65,14 @@ button:hover {
 
 .labelName {
   display: inline-block;
-  text-align: right;
+  text-align: left;
   width: 90%;
 }
 
 .labelValue {
   display: inline-block;
   text-align: right;
-  width: 20%;
+  width: 10%;
 }
 
 /* ------------------------------------------------------------------ */

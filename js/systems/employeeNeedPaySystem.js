@@ -1,8 +1,8 @@
 // @flow
 
-const contractorNeedPayInterval = 1500;
-const contractorAboutToLeaveInterval = 1500;
-const contractorQuitInterval = 2500;
+const contractorNeedPayInterval = 1500 / 4;
+const contractorAboutToLeaveInterval = 1500 / 3;
+const contractorQuitInterval = 2500 / 4;
 
 const employeeNeedPayInterval = 5000;
 const employeeAboutToLeaveInterval = 1000;
@@ -21,14 +21,16 @@ const initEmployeeNeedPaySystem = (store) => {
     time = state.time;
 
     const numContractors = state.employees.contractor.cur;
+    const numContrNeedPay = state.employees.contractor.needPay;
+    const numContrAboutToLeave = state.employees.contractor.aboutToLeave;
     if (time % contractorNeedPayInterval == 0) {
       dispatch({type: 'NEED_PAY', roleType: 'contractor', num: numContractors});
     }
     if (time % contractorAboutToLeaveInterval == 0) {
-      dispatch({type: 'ABOUT_TO_LEAVE', roleType: 'contractor', num: numContractors});
+      dispatch({type: 'ABOUT_TO_LEAVE', roleType: 'contractor', num: numContrNeedPay});
     }
     if (time % contractorQuitInterval == 0) {
-      dispatch({type: 'QUIT', roleType: 'contractor', num: numContractors});
+      dispatch({type: 'QUIT', roleType: 'contractor', num: numContrAboutToLeave});
     }
 
     const numEmployees = state.employees.employee.cur;
