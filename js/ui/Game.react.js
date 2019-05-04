@@ -43,11 +43,22 @@ class Game extends React.Component {
             label="Employees"
             value={
               state.employees.Manager.cur + state.employees.Recruiter.cur +
-              state.employees.Scientist.cur + state.employees.Lawyer.cur
+              state.employees.Scientist.cur + state.employees.Lawyer.cur +
+              state.employees.Foreman.cur
             }
           />
         </Card>
         <Card>
+          <Button
+            label="Hire"
+            onClick={() => dispatch({type: 'HIRE', num: 1})}
+          />
+          <RadioPicker
+            options={state.employees.roleOptions}
+            selected={state.ui.selectedRole}
+            onChange={(role) => dispatch({type: 'SELECT_ROLE', role})}
+          />
+          <LabelledValue label="Recruiters" value={state.employees.Recruiter.cur} />
         </Card>
 
         <Card>
@@ -63,19 +74,14 @@ class Game extends React.Component {
 
         <Card>
           <Button
-            label="Hire"
-            onClick={() => dispatch({type: 'HIRE', num: 1})}
+            label="Pay Contractors"
+            onClick={() => dispatch({type: 'PAY_CONTRACTOR', num: 1})}
           />
-          <RadioPicker
-            options={state.employees.roleOptions}
-            selected={state.ui.selectedRole}
-            onChange={(role) => dispatch({type: 'SELECT_ROLE', role})}
+          <LabelledValue label="Foremen" value={state.employees.Foreman.cur} />
+          <LabelledValue
+            label="Contrs. paid up"
+            value={state.employees.contractor.dontNeedPay}
           />
-          <LabelledValue label="Recruiters" value={state.employees.Recruiter.cur} />
-        </Card>
-        <Card>
-          <Button label="Pay" onClick={() => dispatch({type: 'PAY', num: 1})} />
-          <LabelledValue label="Managers" value={state.employees.Manager.cur} />
           <LabelledValue
             label="Contractors to pay"
             value={state.employees.contractor.needPay}
@@ -83,6 +89,17 @@ class Game extends React.Component {
           <LabelledValue
             label="Contrs. about to quit"
             value={state.employees.contractor.aboutToLeave}
+          />
+        </Card>
+        <Card>
+          <Button
+            label="Pay Employees"
+            onClick={() => dispatch({type: 'PAY_EMPLOYEE', num: 1})}
+          />
+          <LabelledValue label="Managers" value={state.employees.Manager.cur} />
+          <LabelledValue
+            label="Empls. paid up"
+            value={state.employees.employee.dontNeedPay}
           />
           <LabelledValue
             label="Employees to pay"

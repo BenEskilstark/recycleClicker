@@ -26,21 +26,19 @@ var initState = function initState() {
     },
     employees: {
       cur: 0,
-      roleOptions: ['Burner', 'Recycler', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
+      roleOptions: ['Burner', 'Recycler', 'Foreman', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
       contractor: {
         cur: 0,
-        minWage: 10,
-        maxWage: 500,
-        curWage: 2000,
+        wage: 2000,
+        dontNeedPay: 0,
         needPay: 0,
         aboutToLeave: 0,
         quit: 0
       },
       employee: {
         cur: 0,
-        minWage: 100,
-        maxWage: 1000,
-        curWage: 200,
+        wage: 20000,
+        dontNeedPay: 0,
         needPay: 0,
         aboutToLeave: 0,
         quit: 0
@@ -55,10 +53,15 @@ var initState = function initState() {
         clickRate: 100,
         action: 'RECYCLE'
       },
+      Foreman: {
+        cur: 0,
+        clickRate: 100,
+        action: 'PAY_CONTRACTOR'
+      },
       Manager: {
         cur: 0,
         clickRate: 100,
-        action: 'PAY'
+        action: 'PAY_EMPLOYEE'
       },
       Recruiter: {
         cur: 0,
@@ -85,8 +88,8 @@ var initState = function initState() {
       revenuePerRecycle: 100,
 
       contractors: ['Recycler', 'Burner'],
-      employees: ['Recruiter', 'Manager', 'Scientist', 'Lawyer'],
-      allRoles: ['Burner', 'Recycler', 'Recruiter', 'Manager', 'Scientist', 'Lawyer']
+      employees: ['Recruiter', 'Foreman', 'Manager', 'Scientist', 'Lawyer'],
+      allRoles: ['Burner', 'Recycler', 'Foreman', 'Recruiter', 'Manager', 'Scientist', 'Lawyer']
     }
   };
 };

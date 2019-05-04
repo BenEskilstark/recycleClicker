@@ -28,18 +28,16 @@ export type State = {
     roleOptions: Array<Role>,
     contractor: {
       cur: number,
-      minWage: number,
-      maxWage: number,
-      curWage: number,
+      wage: number,
+      dontNeedPay: number,
       needPay: number,
       aboutToLeave: number,
       quit: number,
     },
     employee: {
       cur: number,
-      minWage: number,
-      maxWage: number,
-      curWage: number,
+      wage: number,
+      dontNeedPay: number,
       needPay: number,
       aboutToLeave: number,
       quit: number,
@@ -65,6 +63,7 @@ export type State = {
 export type Role =
   'Burner' |
   'Recycler' |
+  'Foreman' |
   'Manager' |
   'Recruiter' |
   'Scientist' |
@@ -75,6 +74,9 @@ export type Action =
   {type: 'CLEAR_LOCAL_STORAGE'} |
   {type: 'TICK'} |
   {type: 'ADD_TRASH', amount: number} |
-  {type: 'BURN'} |
-  {type: 'RECYCLE'} |
-  {type: 'HIRE', role: Role};
+  {type: 'BURN', num: number} |
+  {type: 'RECYCLE', num: number} |
+  {type: 'PAY_CONTRACTOR', num: number} |
+  {type: 'PAY_EMPLOYEE', num: number} |
+  {type: 'HIRE',  num: number};
+

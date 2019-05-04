@@ -65,27 +65,8 @@ var Game = function (_React$Component) {
           }),
           React.createElement(LabelledValue, {
             label: 'Employees',
-            value: state.employees.Manager.cur + state.employees.Recruiter.cur + state.employees.Scientist.cur + state.employees.Lawyer.cur
+            value: state.employees.Manager.cur + state.employees.Recruiter.cur + state.employees.Scientist.cur + state.employees.Lawyer.cur + state.employees.Foreman.cur
           })
-        ),
-        React.createElement(Card, null),
-        React.createElement(
-          Card,
-          null,
-          React.createElement(Button, { label: 'Burn', onClick: function onClick() {
-              return dispatch({ type: 'BURN', num: 1 });
-            } }),
-          React.createElement(LabelledValue, { label: 'Burned', value: state.burn.cur }),
-          React.createElement(LabelledValue, { label: 'Burners', value: state.employees.Burner.cur })
-        ),
-        React.createElement(
-          Card,
-          null,
-          React.createElement(Button, { label: 'Recycle', onClick: function onClick() {
-              return dispatch({ type: 'RECYCLE', num: 1 });
-            } }),
-          React.createElement(LabelledValue, { label: 'Recycled', value: state.recycle.cur }),
-          React.createElement(LabelledValue, { label: 'Recyclers', value: state.employees.Recycler.cur })
         ),
         React.createElement(
           Card,
@@ -108,10 +89,35 @@ var Game = function (_React$Component) {
         React.createElement(
           Card,
           null,
-          React.createElement(Button, { label: 'Pay', onClick: function onClick() {
-              return dispatch({ type: 'PAY', num: 1 });
+          React.createElement(Button, { label: 'Burn', onClick: function onClick() {
+              return dispatch({ type: 'BURN', num: 1 });
             } }),
-          React.createElement(LabelledValue, { label: 'Managers', value: state.employees.Manager.cur }),
+          React.createElement(LabelledValue, { label: 'Burned', value: state.burn.cur }),
+          React.createElement(LabelledValue, { label: 'Burners', value: state.employees.Burner.cur })
+        ),
+        React.createElement(
+          Card,
+          null,
+          React.createElement(Button, { label: 'Recycle', onClick: function onClick() {
+              return dispatch({ type: 'RECYCLE', num: 1 });
+            } }),
+          React.createElement(LabelledValue, { label: 'Recycled', value: state.recycle.cur }),
+          React.createElement(LabelledValue, { label: 'Recyclers', value: state.employees.Recycler.cur })
+        ),
+        React.createElement(
+          Card,
+          null,
+          React.createElement(Button, {
+            label: 'Pay Contractors',
+            onClick: function onClick() {
+              return dispatch({ type: 'PAY_CONTRACTOR', num: 1 });
+            }
+          }),
+          React.createElement(LabelledValue, { label: 'Foremen', value: state.employees.Foreman.cur }),
+          React.createElement(LabelledValue, {
+            label: 'Contrs. paid up',
+            value: state.employees.contractor.dontNeedPay
+          }),
           React.createElement(LabelledValue, {
             label: 'Contractors to pay',
             value: state.employees.contractor.needPay
@@ -119,6 +125,21 @@ var Game = function (_React$Component) {
           React.createElement(LabelledValue, {
             label: 'Contrs. about to quit',
             value: state.employees.contractor.aboutToLeave
+          })
+        ),
+        React.createElement(
+          Card,
+          null,
+          React.createElement(Button, {
+            label: 'Pay Employees',
+            onClick: function onClick() {
+              return dispatch({ type: 'PAY_EMPLOYEE', num: 1 });
+            }
+          }),
+          React.createElement(LabelledValue, { label: 'Managers', value: state.employees.Manager.cur }),
+          React.createElement(LabelledValue, {
+            label: 'Empls. paid up',
+            value: state.employees.employee.dontNeedPay
           }),
           React.createElement(LabelledValue, {
             label: 'Employees to pay',

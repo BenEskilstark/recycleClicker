@@ -1,10 +1,9 @@
 
  - - - - - - TODO - - - - - -
  - implement employees and wages
-   - Don't let you pay when no one needs it
-   - Fix paying actually resetting counters
    - Visually disable pay button when no one needs it
-   - Employees should actually quit instead of bouncing around (must choose which role)
+   - workers should quit at random, instead of FIFO
+ - hiring must cost money or else you can hire and never pay
  - ticker should display each message on its own line
  - ticker should have upper padding or other styling
  - implement research action
@@ -51,3 +50,6 @@
  - implement ticker system for sending messages
  - implement quantity on employee click actions so they don't fire tons of actions
  - remove wage sliders -- changing wage can be covered with research
+ - Don't let you pay when no one needs it
+ - Employees should actually quit instead of bouncing around (must choose which role)
+ - Fix paying actually resetting counters

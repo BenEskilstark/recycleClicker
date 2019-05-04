@@ -42,7 +42,8 @@ var rootReducer = function rootReducer(state, action) {
       return burnOrRecycleReducer(state, action);
     case 'HIRE':
     case 'SET_WAGE':
-    case 'PAY':
+    case 'PAY_CONTRACTOR':
+    case 'PAY_EMPLOYEE':
     case 'NEED_PAY':
     case 'ABOUT_TO_LEAVE':
     case 'QUIT':

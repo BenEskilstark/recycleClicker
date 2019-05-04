@@ -17,6 +17,7 @@ const employeeReducer = (state: State, action): State => {
           [roleType]: {
             ...state.employees[roleType],
             cur: state.employees[roleType].cur + num,
+            dontNeedPay: state.employees[roleType].dontNeedPay + num,
           },
           [role]: {
             ...state.employees[role],
@@ -30,94 +31,83 @@ const employeeReducer = (state: State, action): State => {
         ...state,
         employees: {
           ...state.employees,
-          [action.role]: {
-            ...state.employees[action.role],
-            curWage: action.wage,
+          [action.roleType]: {
+            ...state.employees[action.roleType],
+            wage: action.wage,
           }
         },
       };
-    case 'PAY': {
-      const {num} = action;
-      const roleType = random() < 0.5 ? 'contractor' : 'employee';
+    case 'PAY_CONTRACTOR':
+    case 'PAY_EMPLOYEE':
+      const roleType = action.type == 'PAY_EMPLOYEE' ? 'employee' : 'contractor';
       const {employees, money} = state;
+      const {num} = action;
+      const byRoleType = employees[roleType];
+
       // can't pay if you can't afford the wage
-      const wage = employees[roleType].curWage;
+      const wage = byRoleType.wage;
       if (wage > money.cur) {
         return state;
       }
+      let numPaidWage = 0;
       const payableNum = min(floor(money.cur / wage), num);
+      const nextAboutToLeave = max(byRoleType.aboutToLeave - payableNum, 0);
+      numPaidWage = byRoleType.aboutToLeave - nextAboutToLeave;
+      const nextNeedPay = max(byRoleType.needPay - (payableNum - numPaidWage), 0);
+      numPaidWage += byRoleType.needPay - nextNeedPay;
+      const nextDontNeedPay = byRoleType.dontNeedPay + numPaidWage;
 
-      const aboutToLeave = min(employees[roleType].aboutToLeave, payableNum);
-      const needPay = min(employees[roleType].needPay - aboutToLeave, payableNum);
-      const paidWage = max(aboutToLeave, needPay) * wage;
+      const paidWage = numPaidWage * wage;
+
       return {
         ...state,
         money: {
-          ...state.money,
+          ...money,
           cur: money.cur - paidWage,
         },
         employees: {
-          ...state.employees,
-          [roleType]: {
-            ...state.employees[roleType],
-            needPay: employees[roleType].needPay - needPay,
-            aboutToLeave: employees[roleType].aboutToLeave - aboutToLeave,
-          }
-        },
-      };
-    }
-    case 'NEED_PAY': {
-      const {roleType, num} = action;
-      const {employees} = state;
-      const byRoleType = employees[roleType];
-      const needPay =
-        min(byRoleType.cur - byRoleType.needPay - byRoleType.aboutToLeave, num);
-      return {
-        ...state,
-        employees: {
-          ...state.employees,
-          [roleType]: {
-            ...state.employees[roleType],
-            needPay: employees[roleType].needPay + needPay,
-          }
-        },
-      };
-    }
-    case 'ABOUT_TO_LEAVE': {
-      const {roleType, num} = action;
-      const {employees} = state;
-      const byRoleType = employees[roleType];
-      const aboutToLeave = min(byRoleType.needPay, num);
-      const needPay = byRoleType.needPay - aboutToLeave;
-      return {
-        ...state,
-        employees: {
-          ...state.employees,
+          ...employees,
           [roleType]: {
             ...byRoleType,
-            aboutToLeave: byRoleType.aboutToLeave + aboutToLeave,
-            needPay,
-          }
-        },
+            aboutToLeave: nextAboutToLeave,
+            needPay: nextNeedPay,
+            dontNeedPay: nextDontNeedPay,
+          },
+        }
       };
-    }
-    case 'QUIT': {
-      const {roleType, num} = action;
+    case 'NEED_PAY':{
+      const {roleType} = action;
       const {employees} = state;
-      const byRoleType = employees[roleType];
-      const quit = min(byRoleType.aboutToLeave, num);
-      const aboutToLeave = byRoleType.aboutToLeave - quit;
+      const byRoleType = state.employees[roleType];
+
+      // employees leave by role, randomly -- IN PLACE!
+      const roles = state.config[roleType + 's']; // TODO shuffle this
+      const numQuitting = byRoleType.aboutToLeave;
+      let toQuit = numQuitting;
+      let numQuit = 0;
+      let i = 0;
+      while (toQuit > 0 && i < roles.length) {
+        const role = roles[i];
+        const curInRole = employees[role].cur;
+        employees[role].cur = max(employees[role].cur - toQuit, 0);
+        numQuit += (curInRole - employees[role].cur);
+        toQuit = numQuitting - numQuit;
+        i++;
+      }
+
       return {
         ...state,
         employees: {
-          cur: employees.cur - quit,
           ...state.employees,
+          cur: state.employees.cur - byRoleType.aboutToLeave,
           [roleType]: {
             ...byRoleType,
-            cur: byRoleType.cur - quit,
-            quit: byRoleType.quit + quit,
-            aboutToLeave,
-          }
+            quit: byRoleType.quit + numQuitting,
+            aboutToLeave: byRoleType.needPay,
+            needPay: byRoleType.dontNeedPay,
+            dontNeedPay: 0,
+            cur: byRoleType.cur - byRoleType.aboutToLeave,
+          },
         },
       };
     }
