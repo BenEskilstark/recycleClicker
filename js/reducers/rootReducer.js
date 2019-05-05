@@ -5,6 +5,7 @@ const {employeeReducer} = require('./employeeReducer');
 const {tickReducer} = require('./tickReducer');
 const {trashReducer} = require('./trashReducer');
 const {uiReducer} = require('./uiReducer');
+const {researchOrLobbyReducer} = require('./researchOrLobbyReducer');
 const {tickerReducer} = require('./tickerReducer');
 
 const {initState} = require('../state/initState');
@@ -25,8 +26,10 @@ const rootReducer = ((state: State, action: Action): State => {
     case 'TICK':
       return tickReducer(state, action);
     case 'ADD_TRASH':
+    case 'SET_TRASH_MULTIPLIER':
       return trashReducer(state, action);
     case 'BURN':
+    case 'FASTER_BURN':
     case 'RECYCLE':
       return burnOrRecycleReducer(state, action);
     case 'HIRE':
@@ -40,8 +43,13 @@ const rootReducer = ((state: State, action: Action): State => {
     case 'SELECT_ROLE':
       return uiReducer(state, action);
     case 'RESEARCH':
+    case 'RESEARCH_GREEDY':
+    case 'RESEARCH_GOOD':
     case 'LOBBY':
-      return state; // TODO
+    case 'LOBBY_GOOD':
+    case 'LOBBY_GREEDY':
+    case 'REMOVE_JUST_RESEARCHED':
+      return researchOrLobbyReducer(state, action);
     case 'TICKER':
       return tickerReducer(state, action);
   }

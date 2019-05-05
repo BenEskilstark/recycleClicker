@@ -38,7 +38,7 @@ var Ticker = function (_React$Component) {
           message = '> ' + message;
         }
         toDisplay.push(React.createElement(
-          'span',
+          'div',
           { key: 'message_' + message + '_' + i },
           message
         ));

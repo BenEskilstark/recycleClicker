@@ -20,14 +20,28 @@ var employeeReducer = function employeeReducer(state, action) {
 
         var role = state.ui.selectedRole;
         var _roleType = state.config.employees.includes(role) ? 'employee' : 'contractor';
+        var _byRoleType = state.employees[_roleType];
+        var _money = state.money;
+        // hiring costs the wage up front so you can't get free labor
+
+        var _wage = _byRoleType.wage;
+        if (_wage > _money.cur) {
+          return state;
+        }
+        var _numPaidWage = min(floor(_money.cur / _wage), _num);
+        var wagePaid = _numPaidWage * _wage;
+
         return _extends({}, state, {
+          money: _extends({}, state.money, {
+            cur: _money.cur - wagePaid
+          }),
           employees: _extends({}, state.employees, (_extends2 = {
-            cur: state.employees.cur + _num
+            cur: state.employees.cur + _numPaidWage
           }, _defineProperty(_extends2, _roleType, _extends({}, state.employees[_roleType], {
-            cur: state.employees[_roleType].cur + _num,
-            dontNeedPay: state.employees[_roleType].dontNeedPay + _num
+            cur: state.employees[_roleType].cur + _numPaidWage,
+            dontNeedPay: state.employees[_roleType].dontNeedPay + _numPaidWage
           })), _defineProperty(_extends2, role, _extends({}, state.employees[role], {
-            cur: state.employees[role].cur + _num
+            cur: state.employees[role].cur + _numPaidWage
           })), _extends2))
         });
       }
@@ -76,11 +90,11 @@ var employeeReducer = function employeeReducer(state, action) {
         var _roleType2 = action.roleType;
         var _employees = state.employees;
 
-        var _byRoleType = state.employees[_roleType2];
+        var _byRoleType2 = state.employees[_roleType2];
 
         // employees leave by role, randomly -- IN PLACE!
         var roles = state.config[_roleType2 + 's']; // TODO shuffle this
-        var numQuitting = _byRoleType.aboutToLeave;
+        var numQuitting = _byRoleType2.aboutToLeave;
         var toQuit = numQuitting;
         var numQuit = 0;
         var i = 0;
@@ -95,13 +109,13 @@ var employeeReducer = function employeeReducer(state, action) {
 
         return _extends({}, state, {
           employees: _extends({}, state.employees, _defineProperty({
-            cur: state.employees.cur - _byRoleType.aboutToLeave
-          }, _roleType2, _extends({}, _byRoleType, {
-            quit: _byRoleType.quit + numQuitting,
-            aboutToLeave: _byRoleType.needPay,
-            needPay: _byRoleType.dontNeedPay,
+            cur: state.employees.cur - _byRoleType2.aboutToLeave
+          }, _roleType2, _extends({}, _byRoleType2, {
+            quit: _byRoleType2.quit + numQuitting,
+            aboutToLeave: _byRoleType2.needPay,
+            needPay: _byRoleType2.dontNeedPay,
             dontNeedPay: 0,
-            cur: _byRoleType.cur - _byRoleType.aboutToLeave
+            cur: _byRoleType2.cur - _byRoleType2.aboutToLeave
           })))
         });
       }

@@ -21,15 +21,27 @@ var initState = function initState() {
     money: {
       cur: 10000
     },
+    research: {
+      cur: 0,
+      greedyOptions: [{ name: 'Faster burning', cost: 50 }, { name: 'Even faster burning', cost: 250 }],
+      goodOptions: [{ name: 'Cheaper recycling', cost: 100 }],
+      justResearched: null
+    },
+    lobby: {
+      cur: 0,
+      greedyOptions: [{ name: 'Recycling subsidies', cost: 100 }, { name: 'Lower minimum wage', cost: 1000 }, { name: 'Ultra-consumerist society', cost: 10000 }],
+      goodOptions: [{ name: 'Fully-sustainable society', cost: 10000 }],
+      justResearched: null
+    },
     ticker: {
       messages: []
     },
     employees: {
       cur: 0,
-      roleOptions: ['Burner', 'Recycler', 'Foreman', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
+      roleOptions: ['Burner', 'Recycler', 'Foreman', 'Manager', 'Scientist', 'Lawyer'],
       contractor: {
         cur: 0,
-        wage: 2000,
+        wage: 500,
         dontNeedPay: 0,
         needPay: 0,
         aboutToLeave: 0,
@@ -37,7 +49,7 @@ var initState = function initState() {
       },
       employee: {
         cur: 0,
-        wage: 20000,
+        wage: 10000,
         dontNeedPay: 0,
         needPay: 0,
         aboutToLeave: 0,
@@ -89,7 +101,9 @@ var initState = function initState() {
 
       contractors: ['Recycler', 'Burner'],
       employees: ['Recruiter', 'Foreman', 'Manager', 'Scientist', 'Lawyer'],
-      allRoles: ['Burner', 'Recycler', 'Foreman', 'Recruiter', 'Manager', 'Scientist', 'Lawyer']
+      allRoles: ['Burner', 'Recycler', 'Foreman', 'Recruiter', 'Manager', 'Scientist', 'Lawyer'],
+
+      trashMultiplier: 1
     }
   };
 };

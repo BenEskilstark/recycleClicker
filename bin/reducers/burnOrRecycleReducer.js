@@ -29,6 +29,16 @@ var burnOrRecycleReducer = function burnOrRecycleReducer(state, action) {
           })
         });
       }
+    case 'FASTER_BURN':
+      {
+        return _extends({}, state, {
+          employees: _extends({}, state.employees, {
+            Burner: _extends({}, state.employees.Burner, {
+              clickRate: action.clickRate
+            })
+          })
+        });
+      }
     case 'RECYCLE':
       {
         var _num = action.num;
@@ -48,6 +58,12 @@ var burnOrRecycleReducer = function burnOrRecycleReducer(state, action) {
           })
         });
       }
+    case 'CHEAPER_RECYCLING':
+      return _extends({}, state, {
+        config: _extends({}, state.config, {
+          revenuePerRecycle: revenuePerRecycle + action.additionalRevenuePerRecycle
+        })
+      });
   }
 };
 

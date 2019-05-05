@@ -9,19 +9,33 @@ const employeeReducer = (state: State, action): State => {
       const {num} = action;
       const role = state.ui.selectedRole;
       const roleType = state.config.employees.includes(role) ? 'employee' : 'contractor';
+      const byRoleType = state.employees[roleType];
+      const {money} = state;
+      // hiring costs the wage up front so you can't get free labor
+      const wage = byRoleType.wage;
+      if (wage > money.cur) {
+        return state;
+      }
+      const numPaidWage = min(floor(money.cur / wage), num);
+      const wagePaid = numPaidWage * wage;
+
       return {
         ...state,
+        money: {
+          ...state.money,
+          cur: money.cur - wagePaid,
+        },
         employees: {
           ...state.employees,
-          cur: state.employees.cur + num,
+          cur: state.employees.cur + numPaidWage,
           [roleType]: {
             ...state.employees[roleType],
-            cur: state.employees[roleType].cur + num,
-            dontNeedPay: state.employees[roleType].dontNeedPay + num,
+            cur: state.employees[roleType].cur + numPaidWage,
+            dontNeedPay: state.employees[roleType].dontNeedPay + numPaidWage,
           },
           [role]: {
             ...state.employees[role],
-            cur: state.employees[role].cur + num,
+            cur: state.employees[role].cur + numPaidWage,
           },
         },
       };

@@ -10,6 +10,12 @@ var trashReducer = function trashReducer(state, action) {
           cur: state.trash.cur + action.trash
         })
       });
+    case 'SET_TRASH_MULTIPLIER':
+      return _extends({}, state, {
+        config: _extends({}, state.config, {
+          trashMultiplier: action.multiplier
+        })
+      });
   }
   return state;
 };

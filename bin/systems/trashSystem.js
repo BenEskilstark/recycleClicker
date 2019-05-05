@@ -13,8 +13,11 @@ var initTrashSystem = function initTrashSystem(store) {
     }
     time = state.time;
 
-    if (time % timeInterval == 0) {
-      store.dispatch({ type: 'ADD_TRASH', trash: 200 * (time / timeInterval) });
+    var trashMultiplier = state.config.trashMultiplier;
+
+    if (time % (timeInterval / trashMultiplier) == 0) {
+      var trashAmount = 200 * (time / timeInterval) * trashMultiplier;
+      store.dispatch({ type: 'ADD_TRASH', trash: trashAmount });
     }
   });
 };

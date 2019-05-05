@@ -20,6 +20,18 @@ export type State = {
     cur: number,
     max: number,
   },
+  research: {
+    cur: number,
+    greedyOptions: Array<{name: string, cost: number}>,
+    goodOptions: Array<{name: string, cost: number}>,
+    justResearched: ?{name: string, cost: number},
+  },
+  lobby: {
+    cur: number,
+    greedyOptions: Array<{name: string, cost: number}>,
+    goodOptions: Array<{name: string, cost: number}>,
+    justResearched: ?{name: string, cost: number},
+  },
   ticker: {
     messages: Array<string>,
   },
@@ -57,6 +69,8 @@ export type State = {
     revenuePerRecycle: number,
     contractors: Array<Role>,
     employees: Array<Role>,
+
+    trashMultiplier: number,
   },
 };
 

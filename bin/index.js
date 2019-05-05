@@ -16,18 +16,24 @@ var _require3 = require('./systems/employeeClickSystem'),
 var _require4 = require('./systems/trashSystem'),
     initTrashSystem = _require4.initTrashSystem;
 
-var _require5 = require('./systems/employeeNeedPaySystem'),
-    initEmployeeNeedPaySystem = _require5.initEmployeeNeedPaySystem;
+var _require5 = require('./systems/researchAndLobbySystem'),
+    initResearchAndLobbySystem = _require5.initResearchAndLobbySystem;
+
+var _require6 = require('./systems/employeeNeedPaySystem'),
+    initEmployeeNeedPaySystem = _require6.initEmployeeNeedPaySystem;
 
 var store = createStore(rootReducer);
 window.store = store; // useful for debugging
 
 store.dispatch({ type: 'START' });
+store.dispatch({ type: 'TICKER', message: 'Welcome to An Inconvenient Clicker' });
+store.dispatch({ type: 'TICKER', message: 'Please handle Earth\'s trash problem!' });
 
 // set up systems
 initEmployeeClickSystem(store);
 initTrashSystem(store);
 initEmployeeNeedPaySystem(store);
+initResearchAndLobbySystem(store);
 
 var interval = setInterval(function () {
   return store.dispatch({ type: 'TICK' });

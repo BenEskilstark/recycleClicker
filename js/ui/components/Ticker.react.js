@@ -17,7 +17,7 @@ class Ticker extends React.Component {
       if (i == numMessagesToDisplay - 1) {
         message = '> ' + message;
       }
-      toDisplay.push(<span key={'message_' + message + '_' + i}>{message}</span>);
+      toDisplay.push(<div key={'message_' + message + '_' + i}>{message}</div>);
 
     }
     return (

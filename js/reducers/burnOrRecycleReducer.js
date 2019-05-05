@@ -29,6 +29,18 @@ const burnOrRecycleReducer = (state: State, action): State => {
         },
       };
     }
+    case 'FASTER_BURN': {
+      return {
+        ...state,
+        employees: {
+          ...state.employees,
+          Burner: {
+            ...state.employees.Burner,
+            clickRate: action.clickRate,
+          },
+        },
+      };
+    }
     case 'RECYCLE': {
       const {num} = action;
       if (state.trash.cur == 0) {
@@ -50,6 +62,14 @@ const burnOrRecycleReducer = (state: State, action): State => {
         },
       };
     }
+    case 'CHEAPER_RECYCLING':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          revenuePerRecycle: revenuePerRecycle + action.additionalRevenuePerRecycle,
+        },
+      };
   }
 }
 
