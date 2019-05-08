@@ -35,6 +35,9 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
           dispatch({ type: 'TICKER', message: 'We can now pull more garbage from the sea' });
           dispatch({ type: 'SET_TRASH_MULTIPLIER', multiplier: 2 });
           break;
+        case 'Convert all burners to recyclers':
+          dispatch({ type: 'CONVERT_WORKERS', roleFrom: 'Burner', roleTo: 'Recycler' });
+          break;
       }
     }
 
@@ -53,6 +56,11 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
           break;
         case 'Lower minimum wage':
           dispatch({ type: 'SET_WAGE', roleType: 'contractor', wage: 350 });
+          break;
+        case 'Late-stage capitalism':
+          dispatch({ type: 'TICKER', message: 'Money > Earth' });
+          dispatch({ type: 'SET_WAGE', roleType: 'contractor', wage: 250 });
+          dispatch({ type: 'SET_WAGE', roleType: 'employee', wage: 40000 });
           break;
         case 'Ultra-consumerist society':
           dispatch({ type: 'TICKER', message: 'People generate way more trash!' });

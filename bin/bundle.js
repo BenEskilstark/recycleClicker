@@ -254,6 +254,18 @@ var employeeReducer = function employeeReducer(state, action) {
           })
         });
       }
+    case 'CONVERT_WORKERS':
+      {
+        var _extends6;
+
+        return _extends({}, state, {
+          employees: _extends({}, state.employees, (_extends6 = {}, _defineProperty(_extends6, action.roleFrom, _extends({}, state.employees[action.roleFrom], {
+            cur: 0
+          })), _defineProperty(_extends6, action.roleTo, _extends({}, state.employees[action.roleTo], {
+            cur: state.employees[action.roleTo].cur + state.employees[action.roleFrom].cur
+          })), _extends6))
+        });
+      }
   }
   return state;
 };
@@ -419,6 +431,7 @@ var rootReducer = function rootReducer(state, action) {
     case 'ABOUT_TO_LEAVE':
     case 'QUIT':
     case 'CONTRACTOR_OVER_TIME':
+    case 'CONVERT_WORKERS':
       return employeeReducer(state, action);
     case 'SELECT_ROLE':
     case 'SET_CARD_VISIBILITY':
@@ -615,12 +628,12 @@ var initState = function initState() {
     research: {
       cur: 0,
       greedyOptions: [{ name: 'Faster burning', cost: 150 }, { name: 'Even faster burning', cost: 500 }, { name: 'Upgraded incinerators', cost: 3000 }],
-      goodOptions: [{ name: 'Cheaper recycling', cost: 1000 }, { name: 'Efficient recycling', cost: 1000 }, { name: 'Dredge the oceans', cost: 2500 }],
+      goodOptions: [{ name: 'Cheaper recycling', cost: 1000 }, { name: 'Efficient recycling', cost: 1000 }, { name: 'Dredge the oceans', cost: 2500 }, { name: 'Convert all burners to recyclers', cost: 5000 }],
       justResearched: null
     },
     lobby: {
       cur: 0,
-      greedyOptions: [{ name: 'Contractor over-time', cost: 1000 }, { name: 'Lower minimum wage', cost: 2000 }, { name: 'Ultra-consumerist society', cost: 10000 }],
+      greedyOptions: [{ name: 'Contractor over-time', cost: 1000 }, { name: 'Lower minimum wage', cost: 2000 }, { name: 'Late-stage capitalism', cost: 5000 }, { name: 'Ultra-consumerist society', cost: 10000 }],
       goodOptions: [{ name: 'Recycling subsidies', cost: 500 }, { name: 'Raise contractor wages', cost: 1000 }, { name: 'Universal healthcare', cost: 2000 }, { name: 'Communism', cost: 5000 }, { name: 'Fully-sustainable society', cost: 10000 }],
       justResearched: null
     },
@@ -947,6 +960,9 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
           dispatch({ type: 'TICKER', message: 'We can now pull more garbage from the sea' });
           dispatch({ type: 'SET_TRASH_MULTIPLIER', multiplier: 2 });
           break;
+        case 'Convert all burners to recyclers':
+          dispatch({ type: 'CONVERT_WORKERS', roleFrom: 'Burner', roleTo: 'Recycler' });
+          break;
       }
     }
 
@@ -965,6 +981,11 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
           break;
         case 'Lower minimum wage':
           dispatch({ type: 'SET_WAGE', roleType: 'contractor', wage: 350 });
+          break;
+        case 'Late-stage capitalism':
+          dispatch({ type: 'TICKER', message: 'Money > Earth' });
+          dispatch({ type: 'SET_WAGE', roleType: 'contractor', wage: 250 });
+          dispatch({ type: 'SET_WAGE', roleType: 'employee', wage: 40000 });
           break;
         case 'Ultra-consumerist society':
           dispatch({ type: 'TICKER', message: 'People generate way more trash!' });

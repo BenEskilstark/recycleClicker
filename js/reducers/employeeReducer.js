@@ -136,6 +136,22 @@ const employeeReducer = (state: State, action): State => {
         },
       };
     }
+    case 'CONVERT_WORKERS': {
+      return {
+        ...state,
+        employees: {
+          ...state.employees,
+          [action.roleFrom]: {
+            ...state.employees[action.roleFrom],
+            cur: 0,
+          },
+          [action.roleTo]: {
+            ...state.employees[action.roleTo],
+            cur: state.employees[action.roleTo].cur + state.employees[action.roleFrom].cur,
+          }
+        }
+      }
+    }
   }
   return state;
 }

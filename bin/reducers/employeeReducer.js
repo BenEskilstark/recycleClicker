@@ -129,6 +129,18 @@ var employeeReducer = function employeeReducer(state, action) {
           })
         });
       }
+    case 'CONVERT_WORKERS':
+      {
+        var _extends6;
+
+        return _extends({}, state, {
+          employees: _extends({}, state.employees, (_extends6 = {}, _defineProperty(_extends6, action.roleFrom, _extends({}, state.employees[action.roleFrom], {
+            cur: 0
+          })), _defineProperty(_extends6, action.roleTo, _extends({}, state.employees[action.roleTo], {
+            cur: state.employees[action.roleTo].cur + state.employees[action.roleFrom].cur
+          })), _extends6))
+        });
+      }
   }
   return state;
 };

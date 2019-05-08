@@ -47,6 +47,7 @@ const initState = (): State => {
         {name: 'Cheaper recycling', cost: 1000},
         {name: 'Efficient recycling', cost: 1000},
         {name: 'Dredge the oceans', cost: 2500},
+        {name: 'Convert all burners to recyclers', cost: 5000},
       ],
       justResearched: null,
     },
@@ -55,6 +56,7 @@ const initState = (): State => {
       greedyOptions: [
         {name: 'Contractor over-time', cost: 1000},
         {name: 'Lower minimum wage', cost: 2000},
+        {name: 'Late-stage capitalism', cost: 5000},
         {name: 'Ultra-consumerist society', cost: 10000},
       ],
       goodOptions: [

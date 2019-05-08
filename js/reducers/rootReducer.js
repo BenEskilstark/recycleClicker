@@ -41,6 +41,7 @@ const rootReducer = ((state: State, action: Action): State => {
     case 'ABOUT_TO_LEAVE':
     case 'QUIT':
     case 'CONTRACTOR_OVER_TIME':
+    case 'CONVERT_WORKERS':
       return employeeReducer(state, action);
     case 'SELECT_ROLE':
     case 'SET_CARD_VISIBILITY':
