@@ -93,18 +93,20 @@ var employeeReducer = function employeeReducer(state, action) {
         var _byRoleType2 = state.employees[_roleType2];
 
         // employees leave by role, randomly -- IN PLACE!
-        var roles = state.config[_roleType2 + 's']; // TODO shuffle this
+        var roles = state.config[_roleType2 + 's'];
         var numQuitting = _byRoleType2.aboutToLeave;
         var toQuit = numQuitting;
         var numQuit = 0;
-        var i = 0;
-        while (toQuit > 0 && i < roles.length) {
+        var i = Math.floor(Math.random() * roles.length); // randomize who quits
+        var count = 0;
+        while (toQuit > 0 && count < roles.length) {
           var _role = roles[i];
           var curInRole = _employees[_role].cur;
           _employees[_role].cur = max(_employees[_role].cur - toQuit, 0);
           numQuit += curInRole - _employees[_role].cur;
           toQuit = numQuitting - numQuit;
-          i++;
+          count++;
+          i = (i + 1) % roles.length;
         }
 
         return _extends({}, state, {

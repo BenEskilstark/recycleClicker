@@ -43,6 +43,9 @@ const rootReducer = ((state: State, action: Action): State => {
     case 'CONTRACTOR_OVER_TIME':
       return employeeReducer(state, action);
     case 'SELECT_ROLE':
+    case 'SET_CARD_VISIBILITY':
+    case 'SET_GOD_MODE':
+    case 'FLICKER_CARD':
       return uiReducer(state, action);
     case 'RESEARCH':
     case 'RESEARCH_GREEDY':
@@ -54,6 +57,14 @@ const rootReducer = ((state: State, action: Action): State => {
       return researchOrLobbyReducer(state, action);
     case 'TICKER':
       return tickerReducer(state, action);
+    case 'SET_CONFIG_VALUE':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          [action.config]: action.value,
+        },
+      };
   }
   return state;
 });
