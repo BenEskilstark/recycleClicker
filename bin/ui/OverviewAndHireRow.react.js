@@ -41,16 +41,17 @@ var OverviewAndHireRow = function (_React$Component) {
           dispatch = _props.dispatch;
 
       var contractorOrEmployee = state.config.employees.includes(state.ui.selectedRole) ? 'employee' : 'contractor';
+      var wage = 2 * state.employees[contractorOrEmployee].wage * state.config.employeesPerHire;
       var hireCard = React.createElement(
         Card,
         null,
         React.createElement(Button, {
           id: 'HIRE',
-          label: 'Hire (-2x wage)',
+          label: "Hire (-" + getDisplayMoney(wage) + ")",
           onClick: function onClick() {
             return dispatch({ type: 'HIRE', num: 1 });
           },
-          disabled: state.money.cur < state.employees[contractorOrEmployee].wage
+          disabled: state.money.cur < wage
         }),
         React.createElement(RadioPicker, {
           options: state.employees.roleOptions,

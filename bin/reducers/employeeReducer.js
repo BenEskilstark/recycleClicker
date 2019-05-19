@@ -16,8 +16,7 @@ var employeeReducer = function employeeReducer(state, action) {
       {
         var _extends2;
 
-        var _num = action.num;
-
+        var _num = state.config.employeesPerHire;
         var role = state.ui.selectedRole;
         var _roleType = state.config.employees.includes(role) ? 'employee' : 'contractor';
         var _byRoleType = state.employees[_roleType];

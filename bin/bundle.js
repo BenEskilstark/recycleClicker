@@ -141,8 +141,7 @@ var employeeReducer = function employeeReducer(state, action) {
       {
         var _extends2;
 
-        var _num = action.num;
-
+        var _num = state.config.employeesPerHire;
         var role = state.ui.selectedRole;
         var _roleType = state.config.employees.includes(role) ? 'employee' : 'contractor';
         var _byRoleType = state.employees[_roleType];
@@ -627,14 +626,14 @@ var initState = function initState() {
     },
     research: {
       cur: 0,
-      greedyOptions: [{ name: 'Faster burning', cost: 150 }, { name: 'Even faster burning', cost: 500 }, { name: 'Upgraded incinerators', cost: 3000 }],
-      goodOptions: [{ name: 'Cheaper recycling', cost: 1000 }, { name: 'Efficient recycling', cost: 1000 }, { name: 'Dredge the oceans', cost: 2500 }, { name: 'Convert all burners to recyclers', cost: 5000 }],
+      greedyOptions: [{ name: 'Faster burning', cost: 150 }, { name: 'Even faster burning', cost: 1500 }, { name: 'Upgraded incinerators', cost: 5000 }],
+      goodOptions: [{ name: 'Cheaper recycling', cost: 1000 }, { name: 'Efficient recycling', cost: 2000 }, { name: 'Dredge the oceans', cost: 5000 }, { name: 'Convert all burners to recyclers', cost: 10000 }],
       justResearched: null
     },
     lobby: {
       cur: 0,
-      greedyOptions: [{ name: 'Contractor over-time', cost: 1000 }, { name: 'Lower minimum wage', cost: 2000 }, { name: 'Late-stage capitalism', cost: 5000 }, { name: 'Ultra-consumerist society', cost: 10000 }],
-      goodOptions: [{ name: 'Recycling subsidies', cost: 500 }, { name: 'Raise contractor wages', cost: 1000 }, { name: 'Universal healthcare', cost: 2000 }, { name: 'Communism', cost: 5000 }, { name: 'Fully-sustainable society', cost: 10000 }],
+      greedyOptions: [{ name: 'Contractor over-time', cost: 1000 }, { name: 'Lower minimum wage', cost: 3000 }, { name: 'Late-stage capitalism', cost: 5000 }, { name: 'Ultra-consumerist society', cost: 10000 }],
+      goodOptions: [{ name: 'Recycling subsidies', cost: 500 }, { name: 'Raise contractor wages', cost: 1000 }, { name: 'Universal healthcare', cost: 4000 }, { name: 'Communism', cost: 10000 }, { name: 'Fully-sustainable society', cost: 50000 }],
       justResearched: null
     },
     ticker: {
@@ -703,8 +702,10 @@ var initState = function initState() {
       trashPerRecycle: 1,
       revenuePerRecycle: 100,
 
+      employeesPerHire: 1,
+
       contractorNeedPayInterval: 500,
-      employeeNeedPayInterval: 5000,
+      employeeNeedPayInterval: 2000,
 
       contractors: ['Recycler', 'Burner'],
       employees: ['Foreman', 'Manager', 'Scientist', 'Lawyer'],
@@ -859,20 +860,34 @@ var initEmployeeClickSystem = function initEmployeeClickSystem(store) {
 
         var role = state.employees[roleOption];
         var button = document.getElementById(role.action + '_button');
+
         if (time % role.clickRate == 0 && role.cur > 0) {
+
+          // don't press button if it won't do anything
+          if (role.action == 'PAY_CONTRACTOR' && state.employees.contractor.dontNeedPay == state.employees.contractor.cur) {
+            return 'continue';
+          }
+          if (role.action == 'PAY_EMPLOYEE' && state.employees.employee.dontNeedPay == state.employees.employee.cur) {
+            return 'continue';
+          }
+          if ((role.action == 'RECYCLE' || role.action == 'BURN') && state.trash.cur <= 0) {
+            return 'continue';
+          }
+
           setTimeout(function () {
             button.setAttribute('style', depressedStr);
             setTimeout(function () {
               return button.setAttribute('style', unDepressedStr);
             }, 150);
           }, 0);
-
           dispatch({ type: role.action, num: role.cur });
         }
       };
 
       for (var _iterator = state.employees.roleOptions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        _loop();
+        var _ret = _loop();
+
+        if (_ret === 'continue') continue;
       }
     } catch (err) {
       _didIteratorError = true;
@@ -933,22 +948,24 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
     var justResearched = state.research.justResearched;
     if (justResearched) {
       dispatch({ type: 'REMOVE_JUST_RESEARCHED', researchOrLobby: 'research' });
-      dispatch({
-        type: 'TICKER',
-        message: 'Just researched ' + justResearched.name
-      });
       // activate the research:
       switch (justResearched.name) {
         case 'Faster burning':
+          dispatch({
+            type: 'TICKER',
+            message: 'Just researched ' + justResearched.name
+          });
           dispatch({ type: 'FASTER_BURN', clickRate: 80 });
           break;
         case 'Even faster burning':
+          dispatch({ type: 'TICKER', message: 'We now burn twice as fast' });
           dispatch({ type: 'FASTER_BURN', clickRate: 50 });
           break;
         case 'Upgraded incinerators':
           dispatch({ type: 'TICKER', message: 'Contractors burn twice as much' });
           dispatch({ type: 'SET_CONFIG_VALUE', config: 'trashPerBurn', value: 2 });
           break;
+
         case 'Cheaper recycling':
           dispatch({ type: 'CHEAPER_RECYCLING', additionalRevenuePerRecycle: 100 });
           break;
@@ -969,10 +986,6 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
     justResearched = state.lobby.justResearched;
     if (justResearched) {
       dispatch({ type: 'REMOVE_JUST_RESEARCHED', researchOrLobby: 'lobby' });
-      dispatch({
-        type: 'TICKER',
-        message: 'Just lobbied for ' + justResearched.name
-      });
       // activate the research:
       switch (justResearched.name) {
         case 'Contractor over-time':
@@ -980,6 +993,7 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
           dispatch({ type: 'CONTRACTOR_OVER_TIME' });
           break;
         case 'Lower minimum wage':
+          dispatch({ type: 'TICKER', message: 'Now we pay contractors three fifty' });
           dispatch({ type: 'SET_WAGE', roleType: 'contractor', wage: 350 });
           break;
         case 'Late-stage capitalism':
@@ -989,8 +1003,9 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
           break;
         case 'Ultra-consumerist society':
           dispatch({ type: 'TICKER', message: 'People generate way more trash!' });
-          dispatch({ type: 'SET_TRASH_MULTIPLIER', multiplier: 5 });
+          dispatch({ type: 'SET_TRASH_MULTIPLIER', multiplier: 3 });
           break;
+
         case 'Recycling subsidies':
           dispatch({ type: 'TICKER', message: 'We now make more money per recycle' });
           dispatch({ type: 'CHEAPER_RECYCLING', additionalRevenuePerRecycle: 100 });
@@ -1012,9 +1027,11 @@ var initResearchAndLobbySystem = function initResearchAndLobbySystem(store) {
         case 'Universal healthcare':
           dispatch({ type: 'TICKER', message: 'Now we don\'t have to pay employees as much' });
           dispatch({ type: 'SET_WAGE', roleType: 'employee', wage: 40000 });
+          break;
         case 'Communism':
-          dispatch({ type: 'SET_WAGE', roleType: 'contractor', wage: 1500 });
-          dispatch({ type: 'SET_WAGE', roleType: 'employee', wage: state.employees.contractor.wage });
+          dispatch({ type: 'TICKER', message: 'We\'re all equal now, comrade!' });
+          dispatch({ type: 'SET_WAGE', roleType: 'contractor', wage: 5000 });
+          dispatch({ type: 'SET_WAGE', roleType: 'employee', wage: 5000 });
           break;
         case 'Fully-sustainable society':
           dispatch({ type: 'TICKER', message: 'People don\'t throw stuff away any more!' });
@@ -1251,16 +1268,17 @@ var OverviewAndHireRow = function (_React$Component) {
           dispatch = _props.dispatch;
 
       var contractorOrEmployee = state.config.employees.includes(state.ui.selectedRole) ? 'employee' : 'contractor';
+      var wage = 2 * state.employees[contractorOrEmployee].wage * state.config.employeesPerHire;
       var hireCard = React.createElement(
         Card,
         null,
         React.createElement(Button, {
           id: 'HIRE',
-          label: 'Hire (-2x wage)',
+          label: "Hire (-" + getDisplayMoney(wage) + ")",
           onClick: function onClick() {
             return dispatch({ type: 'HIRE', num: 1 });
           },
-          disabled: state.money.cur < state.employees[contractorOrEmployee].wage
+          disabled: state.money.cur < wage
         }),
         React.createElement(RadioPicker, {
           options: state.employees.roleOptions,
@@ -1647,7 +1665,7 @@ var LabelledValue = function (_React$Component) {
 
 module.exports = LabelledValue;
 },{"React":30}],26:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1674,7 +1692,7 @@ var Button = function (_React$Component) {
   }
 
   _createClass(Button, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this2 = this;
 
@@ -1687,12 +1705,16 @@ var Button = function (_React$Component) {
         var _loop = function _loop() {
           var option = _step.value;
 
+          // HACK alert:
+          if (option == 'Foreman') {
+            optionToggles.push(React.createElement('div', { className: 'radioDivider' }));
+          }
           optionToggles.push(React.createElement(
-            "div",
-            { className: "radioOption" },
+            'div',
+            { className: 'radioOption' },
             option,
-            React.createElement("input", { type: "radio",
-              className: "radioCheckbox",
+            React.createElement('input', { type: 'radio',
+              className: 'radioCheckbox',
               key: 'radio_option_' + option,
               value: option,
               checked: option === _this2.props.selected,
@@ -1722,7 +1744,7 @@ var Button = function (_React$Component) {
       }
 
       return React.createElement(
-        "div",
+        'div',
         null,
         optionToggles
       );

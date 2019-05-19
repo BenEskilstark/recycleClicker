@@ -6,7 +6,7 @@ const {max, min, floor, random} = Math;
 const employeeReducer = (state: State, action): State => {
   switch (action.type) {
     case 'HIRE': {
-      const {num} = action;
+      const num = state.config.employeesPerHire;
       const role = state.ui.selectedRole;
       const roleType = state.config.employees.includes(role) ? 'employee' : 'contractor';
       const byRoleType = state.employees[roleType];

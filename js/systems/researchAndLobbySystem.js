@@ -7,22 +7,25 @@ const initResearchAndLobbySystem = (store) => {
     let justResearched = state.research.justResearched;
     if (justResearched) {
       dispatch({type: 'REMOVE_JUST_RESEARCHED', researchOrLobby: 'research'});
-      dispatch({
-        type: 'TICKER',
-        message: 'Just researched ' + justResearched.name,
-      });
       // activate the research:
       switch (justResearched.name) {
         case 'Faster burning':
+          dispatch({
+            type: 'TICKER',
+            message: 'Just researched ' + justResearched.name,
+          });
           dispatch({type: 'FASTER_BURN', clickRate: 80});
           break;
         case 'Even faster burning':
+          dispatch({type: 'TICKER', message: 'We now burn twice as fast'});
           dispatch({type: 'FASTER_BURN', clickRate: 50});
           break;
         case 'Upgraded incinerators':
           dispatch({type: 'TICKER', message: 'Contractors burn twice as much'});
           dispatch({type: 'SET_CONFIG_VALUE', config: 'trashPerBurn', value: 2});
           break;
+
+
         case 'Cheaper recycling':
           dispatch({type: 'CHEAPER_RECYCLING', additionalRevenuePerRecycle: 100});
           break;
@@ -43,10 +46,6 @@ const initResearchAndLobbySystem = (store) => {
     justResearched = state.lobby.justResearched;
     if (justResearched) {
       dispatch({type: 'REMOVE_JUST_RESEARCHED', researchOrLobby: 'lobby'});
-      dispatch({
-        type: 'TICKER',
-        message: 'Just lobbied for ' + justResearched.name,
-      });
       // activate the research:
       switch (justResearched.name) {
         case 'Contractor over-time':
@@ -54,6 +53,7 @@ const initResearchAndLobbySystem = (store) => {
           dispatch({type: 'CONTRACTOR_OVER_TIME'});
           break;
         case 'Lower minimum wage':
+          dispatch({type: 'TICKER', message: 'Now we pay contractors three fifty'});
           dispatch({type: 'SET_WAGE', roleType: 'contractor', wage: 350});
           break;
         case 'Late-stage capitalism':
@@ -63,8 +63,10 @@ const initResearchAndLobbySystem = (store) => {
           break;
         case 'Ultra-consumerist society':
           dispatch({type: 'TICKER', message: 'People generate way more trash!'});
-          dispatch({type: 'SET_TRASH_MULTIPLIER', multiplier: 5});
+          dispatch({type: 'SET_TRASH_MULTIPLIER', multiplier: 3});
           break;
+
+
         case 'Recycling subsidies':
           dispatch({type: 'TICKER', message: 'We now make more money per recycle'});
           dispatch({type: 'CHEAPER_RECYCLING', additionalRevenuePerRecycle: 100});
@@ -88,8 +90,9 @@ const initResearchAndLobbySystem = (store) => {
           dispatch({type: 'SET_WAGE', roleType: 'employee', wage: 40000});
           break;
         case 'Communism':
-          dispatch({type: 'SET_WAGE', roleType: 'contractor', wage: 1500});
-          dispatch({type: 'SET_WAGE', roleType: 'employee', wage: state.employees.contractor.wage});
+          dispatch({type: 'TICKER', message: 'We\'re all equal now, comrade!'});
+          dispatch({type: 'SET_WAGE', roleType: 'contractor', wage: 5000});
+          dispatch({type: 'SET_WAGE', roleType: 'employee', wage: 5000});
           break;
         case 'Fully-sustainable society':
           dispatch({type: 'TICKER', message: 'People don\'t throw stuff away any more!'});

@@ -6,10 +6,19 @@ body {
 
 .container {
   width: 100%;
+  touch-action: manipulation; /* prevents tap-to-zoom on iphone */
   max-width: 500px;
   margin: auto;
   height: 100%;
   font-family: 'PT Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+
+  -webkitt-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 .background {
@@ -99,4 +108,8 @@ button {
 
 .radioCheckbox {
   float: right;
+}
+
+.radioDivider {
+  border: 0.5px solid gray;
 }

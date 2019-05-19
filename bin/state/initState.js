@@ -36,14 +36,14 @@ var initState = function initState() {
     },
     research: {
       cur: 0,
-      greedyOptions: [{ name: 'Faster burning', cost: 150 }, { name: 'Even faster burning', cost: 500 }, { name: 'Upgraded incinerators', cost: 3000 }],
-      goodOptions: [{ name: 'Cheaper recycling', cost: 1000 }, { name: 'Efficient recycling', cost: 1000 }, { name: 'Dredge the oceans', cost: 2500 }, { name: 'Convert all burners to recyclers', cost: 5000 }],
+      greedyOptions: [{ name: 'Faster burning', cost: 150 }, { name: 'Even faster burning', cost: 1500 }, { name: 'Upgraded incinerators', cost: 5000 }],
+      goodOptions: [{ name: 'Cheaper recycling', cost: 1000 }, { name: 'Efficient recycling', cost: 2000 }, { name: 'Dredge the oceans', cost: 5000 }, { name: 'Convert all burners to recyclers', cost: 10000 }],
       justResearched: null
     },
     lobby: {
       cur: 0,
-      greedyOptions: [{ name: 'Contractor over-time', cost: 1000 }, { name: 'Lower minimum wage', cost: 2000 }, { name: 'Late-stage capitalism', cost: 5000 }, { name: 'Ultra-consumerist society', cost: 10000 }],
-      goodOptions: [{ name: 'Recycling subsidies', cost: 500 }, { name: 'Raise contractor wages', cost: 1000 }, { name: 'Universal healthcare', cost: 2000 }, { name: 'Communism', cost: 5000 }, { name: 'Fully-sustainable society', cost: 10000 }],
+      greedyOptions: [{ name: 'Contractor over-time', cost: 1000 }, { name: 'Lower minimum wage', cost: 3000 }, { name: 'Late-stage capitalism', cost: 5000 }, { name: 'Ultra-consumerist society', cost: 10000 }],
+      goodOptions: [{ name: 'Recycling subsidies', cost: 500 }, { name: 'Raise contractor wages', cost: 1000 }, { name: 'Universal healthcare', cost: 4000 }, { name: 'Communism', cost: 10000 }, { name: 'Fully-sustainable society', cost: 50000 }],
       justResearched: null
     },
     ticker: {
@@ -112,8 +112,10 @@ var initState = function initState() {
       trashPerRecycle: 1,
       revenuePerRecycle: 100,
 
+      employeesPerHire: 1,
+
       contractorNeedPayInterval: 500,
-      employeeNeedPayInterval: 5000,
+      employeeNeedPayInterval: 2000,
 
       contractors: ['Recycler', 'Burner'],
       employees: ['Foreman', 'Manager', 'Scientist', 'Lawyer'],

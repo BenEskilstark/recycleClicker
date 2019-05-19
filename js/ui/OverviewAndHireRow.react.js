@@ -16,13 +16,14 @@ class OverviewAndHireRow extends React.Component {
     const contractorOrEmployee = state.config.employees.includes(state.ui.selectedRole)
       ? 'employee'
       : 'contractor';
+    const wage = 2 * state.employees[contractorOrEmployee].wage * state.config.employeesPerHire;
     const hireCard = (
       <Card>
         <Button
           id="HIRE"
-          label="Hire (-2x wage)"
+          label={"Hire (-" + getDisplayMoney(wage) + ")"}
           onClick={() => dispatch({type: 'HIRE', num: 1})}
-          disabled={state.money.cur < state.employees[contractorOrEmployee].wage}
+          disabled={state.money.cur < wage}
         />
         <RadioPicker
           options={state.employees.roleOptions}
