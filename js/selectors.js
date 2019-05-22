@@ -1,9 +1,9 @@
 // @flow
 
-import type {State} from '../types';
+import type {State} from './types';
 
 const React = require('React');
-const Card = require('../ui/components/Card.react');
+const Card = require('./ui/components/Card.react');
 
 // money is stored in cents to avoid floating point nonsense
 // magic for taking in either state or a random money amount
@@ -17,7 +17,6 @@ const getDisplayMoney = (value: State | number): string => {
 
 function maybe(
   state: State,
-  dispatch: Dispatch,
   component: React.Node,
   visibilityProperty: string,
  ): ?React.Node {
