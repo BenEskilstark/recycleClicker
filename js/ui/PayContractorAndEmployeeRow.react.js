@@ -2,6 +2,7 @@ const React = require('React');
 
 const Button = require('./components/Button.react');
 const Card = require('./components/Card.react');
+const Slider = require('./components/Slider.react');
 const LabelledValue = require('./components/LabelledValue.react');
 
 const {getDisplayMoney, maybe} = require('../selectors.js');
@@ -33,6 +34,11 @@ class PayContractorAndEmployeeRow extends React.Component {
           label="About to quit"
           value={state.employees.contractor.aboutToLeave}
         />
+        <CountdownBar
+          label="Pay Interval"
+          value={state.employees.contractor.timeToLeave}
+          max={state.config.contractorNeedPayInterval}
+        />
       </Card>
     );
     const payEmployeeCard = (
@@ -56,6 +62,11 @@ class PayContractorAndEmployeeRow extends React.Component {
           label="About to quit"
           value={state.employees.employee.aboutToLeave}
         />
+        <CountdownBar
+          label="Pay Interval"
+          value={state.employees.employee.timeToLeave}
+          max={state.config.employeeNeedPayInterval}
+        />
       </Card>
     );
     return (
@@ -65,6 +76,19 @@ class PayContractorAndEmployeeRow extends React.Component {
       </React.Fragment>
     );
   }
+}
+
+const CountdownBar = (props) => {
+  const {label, value, max} = props;
+  return (
+    <Slider
+      name={label}
+      min={0}
+      max={max}
+      value={value}
+      disabled={true}
+    />
+  );
 }
 
 module.exports = PayContractorAndEmployeeRow;
