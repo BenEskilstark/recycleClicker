@@ -103,6 +103,7 @@ const initState = (): State => {
         dontNeedPay: 0,
         needPay: 0,
         aboutToLeave: 0,
+        timeToLeave: 0,
         quit: 0,
       },
       employee: {
@@ -111,6 +112,7 @@ const initState = (): State => {
         dontNeedPay: 0,
         needPay: 0,
         aboutToLeave: 0,
+        timeToLeave: 0,
         quit: 0,
       },
       Burner: {

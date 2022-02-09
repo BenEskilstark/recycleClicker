@@ -21,6 +21,11 @@ const employeeReducer = (state: State, action): State => {
       }
       const numPaidWage = min(floor(money.cur / wage), num);
       const wagePaid = numPaidWage * wage;
+      let payInterval = state.config.contractorNeedPayInterval;
+      if (roleType == 'employee') {
+        payInterval = state.config.employeeNeedPayInterval;
+      }
+      const timeToLeave = state.employees[roleType].timeToLeave;
 
       return {
         ...state,
@@ -35,6 +40,7 @@ const employeeReducer = (state: State, action): State => {
             ...state.employees[roleType],
             cur: state.employees[roleType].cur + numPaidWage,
             dontNeedPay: state.employees[roleType].dontNeedPay + numPaidWage,
+            timeToLeave: timeToLeave == 0 ? state.time % payInterval : timeToLeave,
           },
           [role]: {
             ...state.employees[role],
@@ -96,6 +102,7 @@ const employeeReducer = (state: State, action): State => {
       const {roleType} = action;
       const {employees} = state;
       const byRoleType = state.employees[roleType];
+      const prevAboutToLeave = state.employees[roleType].aboutToLeave;
 
       // employees leave by role, randomly -- IN PLACE!
       const roles = state.config[roleType + 's'];
@@ -114,6 +121,18 @@ const employeeReducer = (state: State, action): State => {
         i = (i + 1) % roles.length;
       }
 
+      let timeToLeave = byRoleType.timeToLeave;
+      if (
+        byRoleType.needPay > 0 || byRoleType.dontNeedPay > 0 ||
+        byRoleType.aboutToLeave > 0
+      ) {
+        if (roleType == 'contractor') {
+          timeToLeave = state.config.contractorNeedPayInterval;
+        } else if (roleType == 'employee') {
+          timeToLeave = state.config.employeeNeedPayInterval;
+        }
+      }
+
       return {
         ...state,
         employees: {
@@ -123,6 +142,7 @@ const employeeReducer = (state: State, action): State => {
             ...byRoleType,
             quit: byRoleType.quit + numQuitting,
             aboutToLeave: byRoleType.needPay,
+            timeToLeave,
             needPay: byRoleType.dontNeedPay,
             dontNeedPay: 0,
             cur: byRoleType.cur - byRoleType.aboutToLeave,
