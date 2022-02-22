@@ -4,7 +4,7 @@ const Button = require('./components/Button.react');
 const Card = require('./components/Card.react');
 const LabelledValue = require('./components/LabelledValue.react');
 
-const {getDisplayMoney, maybe} = require('../selectors.js');
+const {getDisplayMoney, maybe} = require('../selectors/selectors.js');
 
 /**
  * {props: {state}}

@@ -82,7 +82,7 @@ const rootReducer = ((state: State, action: Action): State => {
         systems: {
           ...state.systems,
           [action.system]: {
-            ...action.system,
+            ...state.systems[action.system],
             [action.property]: action.value,
           },
         },

@@ -20,6 +20,7 @@ const initRandomEventSystem = (store) => {
     // -----------------------------------------------------------------------------------
 
     if (state.employees.contractor.cur >= 200 && !buttonsShown.contractors2) {
+      console.log(buttonsShown);
       dispatch({type: 'SET_SYSTEM_VALUE',
         system: 'buttonsShown', property: 'contractors2', value: true
       });

@@ -5,7 +5,7 @@ const Card = require('./components/Card.react');
 const Slider = require('./components/Slider.react');
 const LabelledValue = require('./components/LabelledValue.react');
 
-const {getDisplayMoney, maybe} = require('../selectors.js');
+const {getDisplayMoney, maybe} = require('../selectors/selectors.js');
 
 /**
  * {props: {state}}

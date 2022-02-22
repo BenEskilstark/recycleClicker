@@ -8,7 +8,7 @@ const Ticker = require('./components/Ticker.react');
 
 const {
   getDisplayMoney
-} = require('../selectors.js');
+} = require('../selectors/selectors.js');
 
 /**
  * {state: {...store.getState()}}

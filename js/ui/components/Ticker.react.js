@@ -18,7 +18,12 @@ class Ticker extends React.Component {
       // if (i == messages.length - 1) {
       //   message = '> ' + message;
       // }
-      toDisplay.push(<div key={'message_' + i}>{message}</div>);
+      toDisplay.push(<div
+        style={{
+          overflow: 'hidden',
+        }}
+        key={'message_' + i}>{message}
+      </div>);
 
     }
     return (
