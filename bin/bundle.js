@@ -645,7 +645,7 @@ var rootReducer = function rootReducer(state, action) {
       });
     case 'SET_SYSTEM_VALUE':
       return _extends({}, state, {
-        systems: _extends({}, state.systems, _defineProperty({}, action.system, _extends({}, action.system, _defineProperty({}, action.property, action.value))))
+        systems: _extends({}, state.systems, _defineProperty({}, action.system, _extends({}, state.systems[action.system], _defineProperty({}, action.property, action.value))))
       });
   }
   return state;
@@ -811,7 +811,10 @@ var getDisplayMoney = function getDisplayMoney(value) {
   return '$' + (money / 100).toFixed(0);
 };
 
-function maybe(state, dispatch, component, visibilityProperty) {
+function maybe(state, component, visibilityProperty) {
+  if (state.ui.gameOver) {
+    return React.createElement(Card, null);
+  }
   if (state.ui[visibilityProperty] || state.ui.godMode) {
     return component;
   }
@@ -1051,6 +1054,7 @@ var initRandomEventSystem = function initRandomEventSystem(store) {
     // -----------------------------------------------------------------------------------
 
     if (state.employees.contractor.cur >= 200 && !buttonsShown.contractors2) {
+      console.log(buttonsShown);
       dispatch({ type: 'SET_SYSTEM_VALUE',
         system: 'buttonsShown', property: 'contractors2', value: true
       });
@@ -1464,7 +1468,7 @@ var ResearchAndLobbyRow = require('./ResearchAndLobbyRow.react');
 var OverviewAndHireRow = require('./OverviewAndHireRow.react');
 var Ticker = require('./components/Ticker.react');
 
-var _require = require('../selectors.js'),
+var _require = require('../selectors/selectors.js'),
     getDisplayMoney = _require.getDisplayMoney;
 
 /**
@@ -1518,7 +1522,7 @@ var Game = function (_React$Component) {
 ;
 
 module.exports = Game;
-},{"../selectors.js":11,"./BurnAndRecycleRow.react":21,"./OverviewAndHireRow.react":23,"./PayContractorAndEmployeeRow.react":24,"./ResearchAndLobbyRow.react":25,"./components/Ticker.react":33,"React":36}],23:[function(require,module,exports){
+},{"../selectors/selectors.js":12,"./BurnAndRecycleRow.react":21,"./OverviewAndHireRow.react":23,"./PayContractorAndEmployeeRow.react":24,"./ResearchAndLobbyRow.react":25,"./components/Ticker.react":33,"React":36}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1631,7 +1635,7 @@ var Card = require('./components/Card.react');
 var Slider = require('./components/Slider.react');
 var LabelledValue = require('./components/LabelledValue.react');
 
-var _require = require('../selectors.js'),
+var _require = require('../selectors/selectors.js'),
     getDisplayMoney = _require.getDisplayMoney,
     maybe = _require.maybe;
 
@@ -1735,7 +1739,7 @@ var CountdownBar = function CountdownBar(props) {
 };
 
 module.exports = PayContractorAndEmployeeRow;
-},{"../selectors.js":11,"./components/Button.react":26,"./components/Card.react":28,"./components/LabelledValue.react":29,"./components/Slider.react":32,"React":36}],25:[function(require,module,exports){
+},{"../selectors/selectors.js":12,"./components/Button.react":26,"./components/Card.react":28,"./components/LabelledValue.react":29,"./components/Slider.react":32,"React":36}],25:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1752,7 +1756,7 @@ var Button = require('./components/Button.react');
 var Card = require('./components/Card.react');
 var LabelledValue = require('./components/LabelledValue.react');
 
-var _require = require('../selectors.js'),
+var _require = require('../selectors/selectors.js'),
     getDisplayMoney = _require.getDisplayMoney,
     maybe = _require.maybe;
 
@@ -1845,7 +1849,7 @@ var ResearchAndLobbyRow = function (_React$Component) {
 }(React.Component);
 
 module.exports = ResearchAndLobbyRow;
-},{"../selectors.js":11,"./components/Button.react":26,"./components/Card.react":28,"./components/LabelledValue.react":29,"React":36}],26:[function(require,module,exports){
+},{"../selectors/selectors.js":12,"./components/Button.react":26,"./components/Card.react":28,"./components/LabelledValue.react":29,"React":36}],26:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2313,7 +2317,11 @@ var Ticker = function (_React$Component) {
         // }
         toDisplay.push(React.createElement(
           'div',
-          { key: 'message_' + i },
+          {
+            style: {
+              overflow: 'hidden'
+            },
+            key: 'message_' + i },
           message
         ));
       }
